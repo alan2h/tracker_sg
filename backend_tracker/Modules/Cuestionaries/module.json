@@ -1,0 +1,11 @@
+{
+    "name": "Cuestionaries",
+    "alias": "cuestionaries",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Cuestionaries\\Providers\\CuestionariesServiceProvider"
+    ],
+    "files": []
+}
