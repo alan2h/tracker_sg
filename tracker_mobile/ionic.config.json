@@ -1,7 +1,0 @@
-{
-  "name": "tracker_mobile",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue-vite"
-}
