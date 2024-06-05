@@ -29,8 +29,13 @@ ion-button {
     text-transform: none;
 }
 
+ion-icon.black {
+  color: black; // your red color
+}
+
 .new-background-color{
-    --background: #9705c0;
+  --background: rgb(2,0,36);
+  --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(55,212,207,0.6474964985994398) 0%, rgba(0,212,255,1) 86%);
 }
 
 // safe padding for ios

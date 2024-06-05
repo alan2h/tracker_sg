@@ -1,13 +1,13 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<app-header [menuShow]="true" title="Perfil"></app-header>
+<ion-content class="ion-padding ion-text-center">
+  <ion-avatar>
+    <ion-icon class="empty-icon" name="person-circle-outline" [ngStyle]="{'color': 'black'}"></ion-icon>
+  </ion-avatar>
+  <ion-button class="photo-btn" size="small" mode="ios"  shape="round">
+    <ion-icon name="camera"></ion-icon>
+  </ion-button>
+  <h4>Alan Beck</h4>
+  <div class="cargo">
+    Director General
+  </div>
 </ion-content>
