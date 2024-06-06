@@ -1,0 +1,142 @@
+<app-header [menuShow]="true" title="Venta"></app-header>
+<ion-content class="ion-padding ion-text-center">
+  <ion-list>
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+        <ion-avatar slot="start">
+         <ion-img [src]="'../../../../assets/client.png'"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <div class="name">Pedro Escamoso </div>
+          <div class="data">
+            <strong>Telefono: </strong> {{ '3781482464' }}
+            <strong>Domicilio: </strong> {{ 'Miguel Gutierrez' }}
+            <strong>Casa: </strong> {{ '1225' }}
+          </div>
+        </ion-label>
+
+        <!-- <ion-item-options side="end">
+          <ion-item-option color="primary" >Agregar</ion-item-option>
+        </ion-item-options> -->
+
+      </ion-item>
+    </ion-item-sliding>
+
+
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+
+          <ion-input label="Carga de 10 kg" type="number" placeholder="000"></ion-input>
+
+
+
+
+      </ion-item>
+    </ion-item-sliding>
+
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+
+          <ion-input label="Carga de 15 kg" type="number" placeholder="000"></ion-input>
+
+
+
+      </ion-item>
+    </ion-item-sliding>
+
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+
+          <ion-input label="Carga de 45 kg" type="number" placeholder="000"></ion-input>
+
+
+
+      </ion-item>
+    </ion-item-sliding>
+
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+
+          <ion-input label="Envase de 10 kg" type="number" placeholder="000"></ion-input>
+
+
+        <ion-item-options side="end">
+          <ion-item-option color="primary" >Canje</ion-item-option>
+        </ion-item-options>
+
+      </ion-item>
+    </ion-item-sliding>
+
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+          <ion-input label="Envase de 15 kg" type="number" placeholder="000"></ion-input>
+
+
+        <ion-item-options side="end">
+          <ion-item-option color="primary" >Canje</ion-item-option>
+        </ion-item-options>
+
+
+      </ion-item>
+    </ion-item-sliding>
+
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+          <ion-input label="Envase de 45 kg" type="number" placeholder="000"></ion-input>
+
+
+        <ion-item-options side="end">
+          <ion-item-option color="primary" >Canje</ion-item-option>
+        </ion-item-options>
+
+
+      </ion-item>
+
+
+
+    </ion-item-sliding>
+
+
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+        <ion-item>
+          <ion-select label="Seleccione metodo de pago" label-placement="floating">
+            <ion-select-option value="mercado_pago">MercadoPago</ion-select-option>
+            <ion-select-option value="Efectivo">Efectivo</ion-select-option>
+            <ion-select-option value="cheque">Cheque</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+
+      </ion-item>
+
+    </ion-item-sliding>
+
+
+    <ion-item-sliding class="product-item">
+      <ion-item>
+        <ion-input
+        ion-input label="Observacion"
+        label-placement="Observacion"
+        fill="outline" maxlength="300"
+        placeholder="">
+      </ion-input>
+
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+
+
+<ion-button routerLink="/main/sales" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+  Guardar
+  <ion-icon style="margin-left: 3%;" name="save-outline"></ion-icon>
+</ion-button>
+</ion-content>

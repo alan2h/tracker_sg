@@ -27,9 +27,14 @@ const routes: Routes = [
       {
         path: 'bills',
         loadChildren: () => import('./bills/bills.module').then( m => m.BillsPageModule)
-      }
+      },
+      {
+        path: 'sales',
+        loadChildren: () => import('./sales/sales.module').then( m => m.SalesPageModule)
+      },
     ]
   },
+
 
 ];
 
