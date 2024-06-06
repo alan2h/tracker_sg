@@ -4,12 +4,20 @@
   <div class="d-flex-center">
     <form action="" class="auth-form">
       <app-logo></app-logo>
-      <app-login-input></app-login-input>
+      <app-login-input type="email"
+        label="correo" icon="mail" placeholder="ingrese su email">
+
+      </app-login-input>
       <div class="validators"></div>
-      <app-login-input></app-login-input>
+      <app-login-input
+        type="password"
+        label="password"
+        placeholder="ingrese su password"
+        icon="lock-closed"
+      ></app-login-input>
       <div class="validators"></div>
       <p routerLink="forgot-password" class="ion-text-end">Olvidaste tu password?</p>
-      <ion-button class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+      <ion-button routerLink="/main/home" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
         Ingresar
       </ion-button>
 
