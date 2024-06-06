@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>clients</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [menuShow]="true" title="Datos del cliente 1"></app-header>
+<ion-content class="ion-padding ion-text-center">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">clients</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- <ion-button class="photo-btn" size="small" mode="ios"  shape="round">
+    <ion-icon name="camera"></ion-icon>
+  </ion-button> -->
+  <div class="cargo" style="margin-left: 0%;">
+      <img style="width: 80%; height: 300%;" [src]="'../../../assets/maps.png'" />
+  </div>
+
+
+<div style="margin-top: 20%;">
+  <h4>Pedro Escamoso</h4>
+  <div class="cargo">
+    Miguel gutierrez 1225 barrio vial
+  </div>
+  <div class="cargo">
+   Casa: 1225
+  </div>
+  <div class="cargo">
+    Manzana: -
+  </div>
+  <div class="cargo">
+    Observacion: "Tiene un perro grande"
+  </div>
+  <div class="cargo">
+    Telefono: 3781482464
+   </div>
+
+<ion-button class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+  Confirmar
+  <ion-icon style="margin-left: 3%;" name="save-outline"></ion-icon>
+</ion-button>
+</div>
 </ion-content>
