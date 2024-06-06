@@ -5,32 +5,86 @@
       <ion-item>
 
         <ion-avatar slot="start">
-         <ion-img [src]="'../../../../assets/logo.jpg'"></ion-img>
+         <ion-img [src]="'../../../../assets/driver.png'"></ion-img>
         </ion-avatar>
         <ion-label>
-          <div class="name">Alan </div>
+          <div class="name">Conductor Alan Beck </div>
           <div class="data">
-            <strong>salario: </strong> {{ '3000' }}
-          </div>
-          <div class="data">
-            <strong>salario: </strong> {{ '3000' }}
-          </div>
-          <div class="data">
-            <strong>salario: </strong> {{ '3000' }}
+            <strong>Dominio: </strong> {{ '4CJH500' }}
           </div>
         </ion-label>
 
-        <ion-item-options side="end">
+        <!-- <ion-item-options side="end">
           <ion-item-option color="primary" >Agregar</ion-item-option>
+        </ion-item-options> -->
+
+      </ion-item>
+    </ion-item-sliding>
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+        <ion-checkbox [(ngModel)]="documentation_vehicle"></ion-checkbox>
+        Papeles vehicular
+        <ion-item-options side="end">
+          <ion-item-option color="primary" >Comentario</ion-item-option>
         </ion-item-options>
+
+      </ion-item>
+    </ion-item-sliding>
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+        <ion-checkbox [(ngModel)]="documentation_driver"></ion-checkbox>
+        Documentación del chofer
+        <ion-item-options side="end">
+          <ion-item-option color="primary" >Comentario</ion-item-option>
+        </ion-item-options>
+
+      </ion-item>
+    </ion-item-sliding>
+    <ion-item-sliding class="product-item">
+      <ion-item>
+
+        <ion-select label="Seleccione el nivel de combustible" label-placement="floating">
+          <ion-select-option value="10">10%</ion-select-option>
+          <ion-select-option value="20">20%</ion-select-option>
+          <ion-select-option value="30">30%</ion-select-option>
+          <ion-select-option value="40">40%</ion-select-option>
+          <ion-select-option value="50">50%</ion-select-option>
+          <ion-select-option value="60">60%</ion-select-option>
+          <ion-select-option value="70">70%</ion-select-option>
+          <ion-select-option value="80">80%</ion-select-option>
+          <ion-select-option value="90">90%</ion-select-option>
+          <ion-select-option value="100">100%</ion-select-option>
+        </ion-select>
+        <ion-item-options side="end">
+          <ion-item-option color="primary" >Comentario</ion-item-option>
+        </ion-item-options>
+
+      </ion-item>
+    </ion-item-sliding>
+
+    <ion-item-sliding class="product-item">
+      <ion-item>
+        <ion-input
+        ion-input label="Outline input"
+        label-placement="Observacion"
+        fill="outline" maxlength="300"
+        placeholder="Ingrese una observacion">
+      </ion-input>
 
       </ion-item>
     </ion-item-sliding>
   </ion-list>
 
-<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+<!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed">
   <ion-fab-button>
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
-</ion-fab>
+</ion-fab> -->
+<ion-button [disabled]="!documentation_driver || !documentation_vehicle" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+  Confirmar
+  <br>
+  <ion-icon style="margin-left: 3%;" name="save-outline"></ion-icon>
+</ion-button>
 </ion-content>

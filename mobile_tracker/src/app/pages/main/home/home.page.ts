@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
+  documentation_driver: boolean = false;
+  documentation_vehicle: boolean = false;
+
   constructor() { }
 
   ngOnInit() {

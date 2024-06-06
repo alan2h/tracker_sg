@@ -18,10 +18,21 @@ export class MainPage implements OnInit {
       icon: 'home-outline'
     },
     {
+      title: 'Gastos',
+      url: '/main/profile',
+      icon: 'document-outline'
+    },
+    {
+      title: 'Mensajes',
+      url: '/main/messages',
+      icon: 'paper-plane-outline'
+    },
+    {
       title: 'Perfil',
       url: '/main/profile',
       icon: 'person-outline'
     },
+
   ];
 
   ngOnInit() {
