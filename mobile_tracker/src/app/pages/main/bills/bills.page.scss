@@ -1,0 +1,23 @@
+ion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 20px;
+    text-align: left;
+}
+
+ion-input {
+    margin: 10px 0;
+}
+
+.button__submit-bills {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
+}
+
+.button__submit-bills ion-button{
+    width: 40%;
+}
+

@@ -19,7 +19,7 @@ export class MainPage implements OnInit {
     },
     {
       title: 'Gastos',
-      url: '/main/profile',
+      url: '/main/bills',
       icon: 'document-outline'
     },
     {

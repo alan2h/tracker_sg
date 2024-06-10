@@ -1,13 +1,31 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>bills</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [menuShow]="true" title="Gastos"></app-header>
+<ion-content class="ion-padding ion-text-center">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">bills</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <form>
+    <ion-list>
+      <ion-button color="secondary" (click)="showDateTime()">Seleccionar Fecha</ion-button>
+      <ion-datetime *ngIf="dateTimeVisible"></ion-datetime>
+
+      <ion-item class="input-container">
+        <ion-input label="Concepto" label-placement="floating" fill="solid" placeholder="Concepto"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-container">
+        <ion-input type="number" label="Monto" label-placement="floating" fill="solid"
+          placeholder="Ingrese el monto gastado"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-container">
+        <ion-input type="text" label="Nro. de comprobante" label-placement="floating" fill="solid"
+          placeholder="Numero de comprobante"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <div class="button__submit-bills"> 
+      <ion-button>Enviar</ion-button>
+    </div>
+
+  </form>
+
 </ion-content>

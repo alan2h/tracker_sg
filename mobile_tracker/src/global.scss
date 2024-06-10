@@ -1,14 +1,3 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
@@ -25,116 +14,129 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+:root {
+  --bg-white-0: #fafafa;
+  --header-text-color: #fafafa;
+  --header-bg-color: #0252A9;
+  --ion-background-color: #FCFCFC;
+  --ion-text-color: #031D38;
+}
+
+ion-item.date__container-bills{
+  display: flex;
+  flex-direction: column;
+}
+
 ion-button {
-    text-transform: none;
+  text-transform: none;
 }
 
 ion-icon.black {
-  color: black; // your red color
+  color: black;
 }
 
-.new-background-color{
-  --background: rgb(2,0,36);
-  --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(55,212,207,0.6474964985994398) 0%, rgba(0,212,255,1) 86%);
+
+.toolbar-background{
+  background-color: #031D38;
 }
 
-// safe padding for ios
-.safe-p-bottom{
-    padding-bottom: constant(safe-area-inset-bottom); // for ios 13+
-    padding-bottom: env(safe-area-inset-bottom); // for previous ios versions
+.safe-p-bottom {
+  padding-bottom: constant(safe-area-inset-bottom); // for ios 13+
+  padding-bottom: env(safe-area-inset-bottom); // for previous ios versions
 }
 
 .submit {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .empty {
-    text-align: center;
-    padding: 60px;
-    opacity: 30%;
+  text-align: center;
+  padding: 60px;
+  opacity: 30%;
 
-    ion-icon {
-        font-size: 100px;
-    }
+  ion-icon {
+    font-size: 100px;
+  }
 }
 
 .d-flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
 .custom-input {
-    --border-color: #e0e0e0;
-    --border-radius: 15px;
-    --border-style: solid;
-    --border-width: 1px;
-    margin: 20px 0;
+  --border-color: #e0e0e0;
+  --border-radius: 15px;
+  --border-style: solid;
+  --border-width: 1px;
+  margin: 20px 0;
 
-    ion-label {
-        position: relative;
-        bottom: 2px;
-    }
+  ion-label {
+    position: relative;
+    bottom: 2px;
+  }
 
-    .eye-icon {
-        position: relative;
-        top: 13px;
-    }
+  .eye-icon {
+    position: relative;
+    top: 13px;
+  }
 }
 
 .validators {
-    color: var(--ion-color-danger);
-    font-size: 13px;
-    text-align: center;
+  color: var(--ion-color-danger);
+  font-size: 13px;
+  text-align: center;
 }
 
-
 .auth-form {
-    width: 100%;
-    text-align: center;
-    padding: 20px;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
 }
 
 .product-item {
-    --padding-top: 20px;
+  --padding-top: 20px;
 
-    ion-avatar {
-        width: 70px;
-        height: 80px;
-        --border-radius: 15px;
+  ion-avatar {
+    width: 70px;
+    height: 80px;
+    --border-radius: 15px;
+  }
+
+  .name {
+    font-weight: 600;
+    padding-bottom: 5px;
+  }
+
+  .data {
+    font-size: 13px;
+
+    strong {
+      font-weight: 500;
     }
+  }
 
-    .name {
-        font-weight: 600;
-        padding-bottom: 5px;
-    }
+  .option-btn {
+    font-size: 27px;
+  }
 
-    .data {
-        font-size: 13px;
-
-        strong {
-            font-weight: 500;
-        }
-    }
-
-    .option-btn {
-        font-size: 27px;
-    }
-
-    ion-chip {
-        font-size: 14px;
-        border-radius: 10px;
-        margin-left: 0;
-    }
+  ion-chip {
+    font-size: 14px;
+    border-radius: 10px;
+    margin-left: 0;
+  }
 }
 
+ion-input .item-inner {
+  padding-right: 0;
+}
 @media (min-width: 769px) {
-    .auth-form {
-        width: 500px;
-    }
+  .auth-form {
+    width: 500px;
+  }
 
-    .add-update-modal {
-        --height: 680px;
-    }
+  .add-update-modal {
+    --height: 680px;
+  }
 }

@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BillsPage implements OnInit {
 
+  dateTimeVisible: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  showDateTime() {
+    this.dateTimeVisible = !this.dateTimeVisible;
   }
 
 }
