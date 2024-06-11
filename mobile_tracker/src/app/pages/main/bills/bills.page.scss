@@ -13,11 +13,21 @@ ion-input {
 .button__submit-bills {
     width: 100%;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin-top: 10px;
+    padding: 0 20px;
 }
 
 .button__submit-bills ion-button{
     width: 40%;
 }
 
+.list__container-nobills{
+    width: 100%;
+    text-align: center;
+}
+
+.list__container__item-buttons{
+    display: flex;
+    justify-content: flex-end;
+}

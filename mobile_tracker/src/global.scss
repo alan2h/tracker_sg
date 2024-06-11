@@ -22,9 +22,13 @@
   --ion-text-color: #031D38;
 }
 
-ion-item.date__container-bills{
-  display: flex;
-  flex-direction: column;
+
+ion-alert .alert-button:first-child {
+  color: red !important;
+}
+
+ion-item .item-inner{
+  padding: 0;
 }
 
 ion-button {
@@ -36,7 +40,7 @@ ion-icon.black {
 }
 
 
-.toolbar-background{
+.toolbar-background {
   background-color: #031D38;
 }
 
@@ -131,6 +135,7 @@ ion-icon.black {
 ion-input .item-inner {
   padding-right: 0;
 }
+
 @media (min-width: 769px) {
   .auth-form {
     width: 500px;

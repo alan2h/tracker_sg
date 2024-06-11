@@ -1,31 +1,66 @@
 <app-header [menuShow]="true" title="Gastos"></app-header>
 <ion-content class="ion-padding ion-text-center">
 
-  <form>
+  <form [formGroup]="billsForm">
     <ion-list>
       <ion-button color="secondary" (click)="showDateTime()">Seleccionar Fecha</ion-button>
-      <ion-datetime *ngIf="dateTimeVisible"></ion-datetime>
-
+      <ion-datetime *ngIf="dateTimeVisible" formControlName="date"></ion-datetime>
       <ion-item class="input-container">
-        <ion-input label="Concepto" label-placement="floating" fill="solid" placeholder="Concepto"></ion-input>
+        <ion-input formControlName="concept" name="concept" label="Concepto" label-placement="floating" fill="solid"
+          placeholder="Concepto"></ion-input>
       </ion-item>
 
       <ion-item class="input-container">
-        <ion-input type="number" label="Monto" label-placement="floating" fill="solid"
-          placeholder="Ingrese el monto gastado"></ion-input>
+        <ion-input min="0" type="number" formControlName="amount" name="amount" label="Monto" label-placement="floating"
+          fill="solid" placeholder="Ingrese el monto gastado"></ion-input>
       </ion-item>
 
       <ion-item class="input-container">
-        <ion-input type="text" label="Nro. de comprobante" label-placement="floating" fill="solid"
-          placeholder="Numero de comprobante"></ion-input>
+        <ion-input type="text" formControlName="numberFacture" name="numberFacture" label="Nro. de comprobante"
+          label-placement="floating" fill="solid" placeholder="Numero de comprobante"></ion-input>
       </ion-item>
-
     </ion-list>
 
-    <div class="button__submit-bills"> 
-      <ion-button>Enviar</ion-button>
+    <div class="button__submit-bills">
+      <ion-button (click)="createBill()">Enviar</ion-button>
     </div>
-
   </form>
+
+  <ion-list class="list__container">
+    <ion-list class="list__container">
+      <h2>Gastos del día</h2>
+      <ion-item *ngIf="billsList.length === 0" class="no-bills-message">
+        <div class="list__container-nobills">
+          No hay gastos en el día.
+        </div>
+      </ion-item>
+
+      <ion-item class="list__container-item" *ngFor="let bill of billsList">
+        <ion-grid>
+          <ion-row>
+            <ion-label>
+              <h2>{{ bill.concept }}</h2>
+              <p>{{bill.id}}</p>
+              <p>Fecha: {{ bill.date }}</p>
+              <p>Monto: {{ bill.amount }}</p>
+              <p>Nro. de comprobante: {{ bill.numberFacture }}</p>
+            </ion-label>
+          </ion-row>
+
+          <ion-row class="list__container__item-buttons">
+            <ion-buttons>
+              <ion-button color="danger" (click)="deleteBill(bill)">Eliminar</ion-button>
+              <ion-button id="edit-alert" color="primary" (click)="editBill(bill)">Editar</ion-button>
+            </ion-buttons>
+          </ion-row>
+        </ion-grid>
+
+        <ion-alert class="modal__alert__bills" header="Editar Gasto"
+          message="Por favor, introduce la nueva información.">
+        </ion-alert>
+      </ion-item>
+    </ion-list>
+  </ion-list>
+
 
 </ion-content>
