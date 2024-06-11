@@ -20,6 +20,11 @@
   --header-bg-color: #0252A9;
   --ion-background-color: #FCFCFC;
   --ion-text-color: #031D38;
+  --white-text: #fcfcfc;
+  --blue-text: #031D38;
+  --button-blue-0-color: #fcfcfc;
+  --button-blue-0-text: #031D38;
+
 }
 
 
@@ -39,10 +44,6 @@ ion-icon.black {
   color: black;
 }
 
-
-.toolbar-background {
-  background-color: #031D38;
-}
 
 .safe-p-bottom {
   padding-bottom: constant(safe-area-inset-bottom); // for ios 13+
@@ -135,6 +136,8 @@ ion-icon.black {
 ion-input .item-inner {
   padding-right: 0;
 }
+
+
 
 @media (min-width: 769px) {
   .auth-form {

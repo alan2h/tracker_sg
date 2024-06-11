@@ -6,6 +6,50 @@ ion-list {
     text-align: left;
 }
 
+.button__date {
+    --background: var(--button-blue-0-color);
+    --background-hover: --button-blue-0-text;
+    --background-activated: --button-blue-0-text;
+    --background-focused: --button-blue-0-text;
+  
+    --color: var(--button-blue-0-text);
+  
+    --border-radius: 10px;
+    --border-color: var(--button-blue-0-text);
+    --border-style: solid;
+    --border-width: 1px;
+    --border-radius: 10px;
+  
+    --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+  
+    --ripple-color: rgb(255, 255, 255);
+  
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+}
+
+  .button__submit {
+    --background: var(--button-blue-0-text);
+    --background-hover: --button-blue-0-color;
+    --background-activated: --button-blue-0-color;
+    --background-focused: --button-blue-0-color;
+  
+    --color: var(--button-blue-0-color);
+  
+    --border-radius: 10px;
+    --border-color: --button-blue-0-text;
+    --border-style: solid;
+    --border-width: 1px;
+    --border-radius: 10px;
+  
+    --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+  
+    --ripple-color: rgb(255, 255, 255);
+  
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+  }
+
 ion-input {
     margin: 10px 0;
 }
@@ -25,6 +69,17 @@ ion-input {
 .list__container-nobills{
     width: 100%;
     text-align: center;
+}
+
+ion-item.input__container{
+    --inner-border-width: 0px;
+    --border-style: none;
+    --border-color: none;
+    border: none;
+  }
+
+ion-label{
+
 }
 
 .list__container__item-buttons{

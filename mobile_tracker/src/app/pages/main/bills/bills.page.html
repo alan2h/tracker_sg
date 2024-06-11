@@ -3,30 +3,29 @@
 
   <form [formGroup]="billsForm">
     <ion-list>
-      <ion-button color="secondary" (click)="showDateTime()">Seleccionar Fecha</ion-button>
+      <ion-button class="button__date"  (click)="showDateTime()">Seleccionar Fecha</ion-button>
       <ion-datetime *ngIf="dateTimeVisible" formControlName="date"></ion-datetime>
-      <ion-item class="input-container">
+      <ion-item class="input__container">
         <ion-input formControlName="concept" name="concept" label="Concepto" label-placement="floating" fill="solid"
-          placeholder="Concepto"></ion-input>
+          placeholder="Concepto" />
       </ion-item>
 
-      <ion-item class="input-container">
+      <ion-item class="input__container">
         <ion-input min="0" type="number" formControlName="amount" name="amount" label="Monto" label-placement="floating"
-          fill="solid" placeholder="Ingrese el monto gastado"></ion-input>
+          fill="solid" placeholder="Ingrese el monto gastado" />
       </ion-item>
 
-      <ion-item class="input-container">
+      <ion-item class="input__container">
         <ion-input type="text" formControlName="numberFacture" name="numberFacture" label="Nro. de comprobante"
-          label-placement="floating" fill="solid" placeholder="Numero de comprobante"></ion-input>
+          label-placement="floating" fill="solid" placeholder="Numero de comprobante" />
       </ion-item>
     </ion-list>
 
     <div class="button__submit-bills">
-      <ion-button (click)="createBill()">Enviar</ion-button>
+      <ion-button class="button__submit" (click)="createBill()">Enviar</ion-button>
     </div>
   </form>
 
-  <ion-list class="list__container">
     <ion-list class="list__container">
       <h2>Gastos del día</h2>
       <ion-item *ngIf="billsList.length === 0" class="no-bills-message">
@@ -36,7 +35,7 @@
       </ion-item>
 
       <ion-item class="list__container-item" *ngFor="let bill of billsList">
-        <ion-grid>
+        <ion-grid  class=" bill__container">
           <ion-row>
             <ion-label>
               <h2>{{ bill.concept }}</h2>
@@ -60,7 +59,6 @@
         </ion-alert>
       </ion-item>
     </ion-list>
-  </ion-list>
 
 
 </ion-content>
