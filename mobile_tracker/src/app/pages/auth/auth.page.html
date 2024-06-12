@@ -1,26 +1,32 @@
 <app-header title="Ingreso al sistema"></app-header>
 
 <ion-content>
-  <div class="d-flex-center">
-    <form action="" class="auth-form">
+  <div class="logo__container d-flex flex-center">
+    <ion-item class="header__form">
       <app-logo></app-logo>
-      <app-login-input type="email"
-        label="correo" icon="mail" placeholder="ingrese su email">
+    </ion-item>
 
-      </app-login-input>
-      <div class="validators"></div>
-      <app-login-input
-        type="password"
-        label="password"
-        placeholder="ingrese su password"
-        icon="lock-closed"
-      ></app-login-input>
-      <div class="validators"></div>
-      <p routerLink="forgot-password" class="ion-text-end">Olvidaste tu password?</p>
-      <ion-button routerLink="/main/home" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
-        Ingresar
-      </ion-button>
-
-    </form>
   </div>
+
+  <form action="" class="form__container">
+    <ion-list>
+      <ion-grid>
+        <h3>Iniciar Sesion</h3>
+      </ion-grid>
+
+      <ion-item class="input__container">
+        <ion-input labelPlacement="stacked" label="Nombre de Usuario" placeholder="nombre de usuario">
+          <ion-icon slot="start" name="person-outline" aria-hidden="true"></ion-icon>
+        </ion-input>
+      </ion-item>
+      <ion-item class="input__container">
+        <ion-input type="password" labelPlacement="stacked" label="Contraseña" placeholder="contraseña">
+          <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
+        </ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button routerLink="/main/home" class="button__submit">Iniciar Sesion</ion-button>
+
+  </form>
 </ion-content>
