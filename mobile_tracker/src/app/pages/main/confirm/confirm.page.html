@@ -1,0 +1,38 @@
+<app-header [menuShow]="true" title="Datos del cliente 1"></app-header>
+<ion-content class="ion-padding ion-text-center">
+
+  <ion-avatar slot="start">
+    <ion-img [src]="'../../../../assets/driver.png'"></ion-img>
+   </ion-avatar>
+   <ion-label>
+     <div class="name">Conductor Alan Beck </div>
+     <div class="data">
+       <strong>Dominio: </strong> {{ '4CJH500' }}
+     </div>
+   </ion-label>
+
+
+<div style="margin-top: 20%;">
+  <h4>Pedro Escamoso</h4>
+  <div class="cargo">
+    Miguel gutierrez 1225 barrio vial
+  </div>
+  <div class="cargo">
+   Casa: 1225
+  </div>
+  <div class="cargo">
+    Manzana: -
+  </div>
+  <div class="cargo">
+    Observacion: "Tiene un perro grande"
+  </div>
+  <div class="cargo">
+    Telefono: 3781482464
+   </div>
+
+<ion-button routerLink="/main/clients" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+  Confirmar
+  <ion-icon style="margin-left: 3%;" name="save-outline"></ion-icon>
+</ion-button>
+</div>
+</ion-content>

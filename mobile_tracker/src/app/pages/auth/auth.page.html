@@ -25,7 +25,7 @@
       </ion-item>
     </ion-list>
 
-    <ion-button type="submit" class="button__submit">Iniciar Sesion</ion-button>
+    <ion-button routerLink="/main/home" type="button" class="button__submit">Iniciar Sesion</ion-button>
 
     <ion-item *ngIf="errorMessage" color="danger" class="error-message">
       <ion-label>{{ errorMessage }}</ion-label>
