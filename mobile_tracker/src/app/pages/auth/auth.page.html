@@ -1,26 +1,34 @@
 <app-header title="Ingreso al sistema"></app-header>
 
 <ion-content>
-  <div class="d-flex-center">
-    <form action="" class="auth-form">
+  <div class="logo__container d-flex flex-center">
+    <ion-item class="header__form">
       <app-logo></app-logo>
-      <app-login-input type="email"
-        label="correo" icon="mail" placeholder="ingrese su email">
-
-      </app-login-input>
-      <div class="validators"></div>
-      <app-login-input
-        type="password"
-        label="password"
-        placeholder="ingrese su password"
-        icon="lock-closed"
-      ></app-login-input>
-      <div class="validators"></div>
-      <p routerLink="forgot-password" class="ion-text-end">Olvidaste tu password?</p>
-      <ion-button routerLink="/main/home" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
-        Ingresar
-      </ion-button>
-
-    </form>
+    </ion-item>
   </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form__container">
+    <ion-list>
+      <ion-grid>
+        <h3>Iniciar Sesion</h3>
+      </ion-grid>
+
+      <ion-item class="input__container">
+        <ion-input formControlName="username" labelPlacement="stacked" label="Nombre de Usuario" placeholder="nombre de usuario">
+          <ion-icon slot="start" name="person-outline" aria-hidden="true"></ion-icon>
+        </ion-input>
+      </ion-item>
+      <ion-item class="input__container">
+        <ion-input type="password" formControlName="pwd_user" labelPlacement="stacked" label="Contraseña" placeholder="contraseña">
+          <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
+        </ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button type="submit" class="button__submit">Iniciar Sesion</ion-button>
+
+    <ion-item *ngIf="errorMessage" color="danger" class="error-message">
+      <ion-label>{{ errorMessage }}</ion-label>
+    </ion-item>
+  </form>
 </ion-content>

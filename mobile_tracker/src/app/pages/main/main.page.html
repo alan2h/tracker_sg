@@ -3,21 +3,34 @@
   <app-header title="Menu"></app-header>
 
   <ion-content [fullscreen]="true" class="ion-text-center">
-    <ion-avatar>
-      <ion-icon class="empty-icon" name="person-circle-outline" [ngStyle]="{'color': 'black'}"></ion-icon>
-    </ion-avatar>
+    <ion-item>
+      <ion-grid>
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col>
+            <ion-avatar>
+              <img src="../../../assets//ProfileExample.jfif">
+            </ion-avatar>
+          </ion-col>
 
-    <h4 [ngStyle]="{'color': 'black'}">{{ 'user'  }}</h4>
-
-  <ion-menu-toggle autoHide="false" *ngFor="let p of pages">
-    <ion-item [ngClass]="{'active': currentPath === p.url}" [routerLink]="p.url" routerDirection="root" detail>
-      <ion-icon slot="start"  [name]="p.icon" [ngStyle]="{'color': 'black'}"></ion-icon>
-      <ion-label [ngStyle]="{'color': 'black'}">
-        {{ p.title }}
-      </ion-label>
+        </ion-row>
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col>
+            <h4>{{ 'user' }}</h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
-  </ion-menu-toggle>
 
+
+    <ion-item *ngFor="let p of pages" [ngClass]="{'active': currentPath === p.url}" [routerLink]="p.url"
+      routerDirection="root" detail>
+      <ion-menu-toggle autoHide="false">
+        <ion-label class="header__menu__item__container">
+          <ion-icon slot="start" [name]="p.icon"></ion-icon>
+          {{ p.title }}
+        </ion-label>
+      </ion-menu-toggle>
+    </ion-item>
   </ion-content>
 
 </ion-menu>

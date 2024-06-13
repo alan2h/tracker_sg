@@ -1,54 +1,71 @@
 ion-content {
-    //--background: #9705c0;
-    --background: rgb(2,0,36);
-    --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(55,212,207,0.6474964985994398) 0%, rgba(0,212,255,1) 86%);
-    --color: var(--ion-color-primary-contrast);
-    --padding-top: 20px;
+    --background: #fcfcfc;
+    align-items: center;
+    justify-content: center;
+}
+
+ion-row{
+    display: grid;
+}
+
+ion-avatar{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    height: 120px;
+    width: 120px;
+    outline: 2px solid #031D38;
+    &h4{
+        color: #031D38;    
+    }
 }
 
 ion-item {
     font-size: 14px;
-    --color: #fff;
-    // --background: var(--ion-color-primary);
-    --background: rgb(2,0,36);
-    --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(55,212,207,0.6474964985994398) 0%, rgba(0,212,255,1) 86%);
-
+    --color: var(--blue-text);
     ion-icon {
-        color: #fff
+        color: var(--blue-text);
     }
-
     &.active {
-        color: #11c005;
-
+        color: var(--white-text);
+        --background: rgba(3, 29, 56,.8);
         ion-icon {
-            color: #11c005;
+            color: var(--white-text);
         }
+    }
+}
+
+.header__menu__item__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+    &ion-icon{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
     }
 }
 
 ion-menu {
     --width: 254px;
     --min-width: 254px;
-    outline: none  //Eliminar borde de color
+    outline: none;
 }
 
-h4 {
-    margin-top: 5px;
-    font-weight: bold;
+
+a{
+    background: none;
 }
 
-ion-avatar {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto;
-}
 .empty-icon {
     font-size: 100px;
 
-}
-
-ion-footer {
-    // --background: #9705c0;
-    --background: rgb(2,0,36);
-    --background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(55,212,207,0.6474964985994398) 0%, rgba(0,212,255,1) 86%);
 }
