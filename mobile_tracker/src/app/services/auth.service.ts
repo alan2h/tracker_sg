@@ -7,25 +7,25 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:4500/api/login';
+  private apiUrl = 'https://glpgas.ar/auth-token/';
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: { username: string; pwd_user: string }): Observable<any> {
+  login(credentials: { username: string; password: string }): Observable<any> {
     return this.http.post<any>(this.apiUrl, credentials).pipe(
       tap(response => {
         if (response && response.token) {
-          localStorage.setItem('token', response.token);
+          sessionStorage.setItem('token', response.token);
         }
       })
     );
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!sessionStorage.getItem('token');
   }
 }

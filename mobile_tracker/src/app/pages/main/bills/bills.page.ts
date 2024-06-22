@@ -9,7 +9,6 @@ import { min } from 'rxjs';
   styleUrls: ['./bills.page.scss'],
 })
 
-// DEFINICION DE ARRAY
 export class BillsPage implements OnInit {
   dateTimeVisible: boolean = false;
   billsForm: FormGroup;
@@ -20,7 +19,6 @@ export class BillsPage implements OnInit {
     numberFacture: "12341"
   }];
 
-  // IMPORT FORMBUILDER Y ALERTCONTROLLER
   constructor(private fb: FormBuilder, private alertController: AlertController) {
     this.billsForm = this.fb.group({
       date: ['', Validators.required],
@@ -32,7 +30,6 @@ export class BillsPage implements OnInit {
 
   ngOnInit() { }
 
-  // MODAL FECHA
   showDateTime() {
     this.dateTimeVisible = !this.dateTimeVisible;
   }
@@ -50,12 +47,10 @@ export class BillsPage implements OnInit {
   }
 
 
-  // DISPARADOR DEL MODAL
   editBill(bill: any) {
     this.presentEditAlert(bill);
   }
 
-  // ARRAYS PARA DEFINIR LOS INPUTS, Y SUS TYPES
   public alertInputs = [
     {
       name: "date",
@@ -78,9 +73,7 @@ export class BillsPage implements OnInit {
     },
   ];
 
-  // CREAR EL MODAL DE EDITAR
   async presentEditAlert(bill: any) {
-    // ASIGNAR A LOS INPUTS DEL MODAL LOS VALORES DEL BILL A EDITAR
     const alertInputsWithValues: any = this.alertInputs.map(input => ({
       ...input,
       value: bill[input.name] || null
@@ -116,7 +109,6 @@ export class BillsPage implements OnInit {
     await alert.present();
   }
 
-  // ELIMINAR BILL
   deleteBill(bill:any){
     const index = this.billsList.findIndex(item => item.id === bill.id);
     if (index !== -1) {

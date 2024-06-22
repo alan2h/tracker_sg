@@ -14,18 +14,21 @@
       </ion-grid>
 
       <ion-item class="input__container">
-        <ion-input formControlName="username" labelPlacement="stacked" label="Nombre de Usuario" placeholder="nombre de usuario">
+        <ion-input formControlName="username" labelPlacement="stacked" label="Nombre de Usuario"
+          placeholder="nombre de usuario">
           <ion-icon slot="start" name="person-outline" aria-hidden="true"></ion-icon>
         </ion-input>
       </ion-item>
       <ion-item class="input__container">
-        <ion-input type="password" formControlName="pwd_user" labelPlacement="stacked" label="Contraseña" placeholder="contraseña">
+        <ion-input type="password" formControlName="password" labelPlacement="stacked" label="Contraseña"
+          placeholder="contraseña">
           <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
         </ion-input>
       </ion-item>
     </ion-list>
 
-    <ion-button routerLink="/main/home" type="button" class="button__submit">Iniciar Sesion</ion-button>
+    <ion-button type="submit" class="button__submit">Iniciar Sesion</ion-button>
+
 
     <ion-item *ngIf="errorMessage" color="danger" class="error-message">
       <ion-label>{{ errorMessage }}</ion-label>

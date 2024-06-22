@@ -1,0 +1,47 @@
+
+.car__info__container{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+ion-row > ion-item{
+    width: 100%;
+}
+
+.message__tip{
+    font-size: 10px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--gray-text);
+    margin: 0;
+}
+
+.title__requisites__container{
+    padding: 10px;
+}
+
+.slidding__button{
+    z-index: 10;
+}
+
+.submit__button__container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit__button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit__button ion-button{
+    width: 80%;
+}
