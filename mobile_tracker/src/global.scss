@@ -13,6 +13,8 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+@import "~leaflet/dist/leaflet.css";
+
 
 :root {
   --bg-white-0: #fafafa;
@@ -22,9 +24,17 @@
   --ion-text-color: #031D38;
   --white-text: #fcfcfc;
   --blue-text: #031d38;
+  --gray-text: #4d535a;
   --blue-bg-50: rgba(19, 18, 18, 0.8);
   --button-blue-0-color: #fcfcfc;
   --button-blue-0-text: #031D38;
+
+  --button-red-0-color: #fcfcfc;
+  --button-red-0-text: #f73737;
+}
+
+body{
+  font-style: system-ui;
 }
 
 
@@ -32,7 +42,7 @@ ion-alert .alert-button:first-child {
   color: red !important;
 }
 
-ion-item .item-inner{
+ion-item .item-inner {
   padding: 0;
 }
 
@@ -43,6 +53,7 @@ ion-button {
 ion-icon.black {
   color: black;
 }
+
 
 
 .safe-p-bottom {
@@ -135,6 +146,26 @@ ion-icon.black {
 
 ion-input .item-inner {
   padding-right: 0;
+}
+
+.button-red {
+  --background: var(--button-red-0-color);
+  --background-hover: var(--button-red-0-color);
+  --background-activated: var(--button-red-0-color);
+  --background-focused: var(--button-red-0-color);
+
+  --color: var(--button-red-0-text);
+
+  --border-color: --button-red-0-text;
+  --border-style: solid;
+  --border-width: 1px;
+
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+  --ripple-color: rgb(255, 255, 255);
+
+  --padding-top: 10px;
+  --padding-bottom: 10px;
 }
 
 

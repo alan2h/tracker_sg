@@ -1,38 +1,86 @@
 <app-header [menuShow]="true" title="Datos del cliente 1"></app-header>
 <ion-content class="ion-padding ion-text-center">
 
-  <ion-avatar slot="start">
-    <ion-img [src]="'../../../../assets/driver.png'"></ion-img>
-   </ion-avatar>
-   <ion-label>
-     <div class="name">Conductor Alan Beck </div>
-     <div class="data">
-       <strong>Dominio: </strong> {{ '4CJH500' }}
-     </div>
-   </ion-label>
+  <ion-item>
+    <ion-grid class="header__container">
+      <ion-row>
+        <h4 class="name">Conductor {{ conductorNombre }}</h4>
+      </ion-row>
+      <ion-row>
+        <h5><strong>Dominio: </strong> {{ dominio }}</h5>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
 
+  <ion-grid>
+    <ion-row>
+      <h4>Datos del cliente</h4>
+    </ion-row>
+  </ion-grid>
+  <ion-item>
+    <ion-grid class="customer__container">
+      <ion-row>
+        <ion-col>
+          Nombre:
+        </ion-col>
+        <ion-col>
+          {{ nombreCliente }}
+        </ion-col>
+      </ion-row>
 
-<div style="margin-top: 20%;">
-  <h4>Pedro Escamoso</h4>
-  <div class="cargo">
-    Miguel gutierrez 1225 barrio vial
-  </div>
-  <div class="cargo">
-   Casa: 1225
-  </div>
-  <div class="cargo">
-    Manzana: -
-  </div>
-  <div class="cargo">
-    Observacion: "Tiene un perro grande"
-  </div>
-  <div class="cargo">
-    Telefono: 3781482464
-   </div>
+      <ion-row>
+        <ion-col>
+          Direccion:
+        </ion-col>
+        <ion-col>
+          {{ direccionCliente }}
+        </ion-col>
+      </ion-row>
 
-<ion-button routerLink="/main/clients" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
-  Confirmar
-  <ion-icon style="margin-left: 3%;" name="save-outline"></ion-icon>
-</ion-button>
-</div>
+      <ion-row>
+        <ion-col>
+          Nro de casa:
+        </ion-col>
+        <ion-col>
+          {{ nroCasaCliente }}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          Manzana:
+        </ion-col>
+        <ion-col>
+          {{ manzanaCliente }}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          Observacion:
+        </ion-col>
+        <ion-col>
+          {{ observacionCliente }}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          Telefono:
+        </ion-col>
+        <ion-col>
+          {{ telefonoCliente }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <div class="container__button">
+    <ion-button (click)="continuar()" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+      Continuar
+    </ion-button>
+    <ion-button (click)="volver()" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
+      Volver
+    </ion-button>
+  </div>
+      
 </ion-content>

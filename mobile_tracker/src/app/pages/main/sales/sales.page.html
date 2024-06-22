@@ -1,142 +1,73 @@
 <app-header [menuShow]="true" title="Venta"></app-header>
 <ion-content class="ion-padding ion-text-center">
-  <ion-list>
-    <ion-item-sliding class="product-item">
+  <form [formGroup]="salesForm" (ngSubmit)="onSubmit()">
+    <ion-list>
       <ion-item>
-
         <ion-avatar slot="start">
-         <ion-img [src]="'../../../../assets/client.png'"></ion-img>
+          <ion-img [src]="'../../../../assets/client.png'"></ion-img>
         </ion-avatar>
-        <ion-label>
-          <div class="name">Pedro Escamoso </div>
-          <div class="data">
-            <strong>Telefono: </strong> {{ '3781482464' }}
-            <strong>Domicilio: </strong> {{ 'Miguel Gutierrez' }}
-            <strong>Casa: </strong> {{ '1225' }}
-          </div>
-        </ion-label>
-
-        <!-- <ion-item-options side="end">
-          <ion-item-option color="primary" >Agregar</ion-item-option>
-        </ion-item-options> -->
-
+        <ion-grid>
+          <ion-row>
+            <h4>Pedro Escamoso</h4>
+          </ion-row>
+          <ion-row>
+            <ion-col><strong>Telefono: </strong></ion-col>
+            <ion-col>{{ '3781482464' }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col><strong>Domicilio: </strong></ion-col>
+            <ion-col>{{ 'Miguel Gutierrez' }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col><strong>Casa: </strong></ion-col>
+            <ion-col>{{ '1225' }}</ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
-    </ion-item-sliding>
 
+      <ion-grid class="title__requisites__container">
+        <ion-row>
+          <h4>Ventas</h4>
+        </ion-row>
+        <ion-row>
+          <p class="message__tip">Cargue los datos de venta realizados a este cliente, o deslize si fue un cambio o devolución</p>
+        </ion-row>
+      </ion-grid>
 
-    <ion-item-sliding class="product-item">
+      <div formArrayName="sales">
+        <ion-item-sliding *ngFor="let sale of sales.controls; let i = index" [formGroupName]="i" class="product-item">
+          <ion-item>
+            <ion-input [label]="sale.value.label" type="number" placeholder="" formControlName="value"></ion-input>
+            <ion-item-options side="end" *ngIf="sale.value.label.includes('Envase')">
+              <ion-button color="primary" (click)="toggleIsChange(i)">
+                {{ sale.value.isChange ? 'Volver' : 'Canje' }}
+              </ion-button>
+            </ion-item-options>
+          </ion-item>
+        </ion-item-sliding>
+        
+      </div>
+
       <ion-item>
-
-
-          <ion-input label="Carga de 10 kg" type="number" placeholder="000"></ion-input>
-
-
-
-
+        <ion-select label="Seleccione metodo de pago" label-placement="floating" formControlName="paymentMethod">
+          <ion-select-option value="mercado_pago">MercadoPago</ion-select-option>
+          <ion-select-option value="Efectivo">Efectivo</ion-select-option>
+          <ion-select-option value="cheque">Cheque</ion-select-option>
+        </ion-select>
       </ion-item>
-    </ion-item-sliding>
 
-    <ion-item-sliding class="product-item">
       <ion-item>
-
-
-          <ion-input label="Carga de 15 kg" type="number" placeholder="000"></ion-input>
-
-
-
+        <ion-textarea label="Observaciones" labelPlacement="stacked" placeholder="Ingrese una observación" formControlName="observations"></ion-textarea>
       </ion-item>
-    </ion-item-sliding>
+    </ion-list>
 
-    <ion-item-sliding class="product-item">
-      <ion-item>
-
-
-          <ion-input label="Carga de 45 kg" type="number" placeholder="000"></ion-input>
-
-
-
-      </ion-item>
-    </ion-item-sliding>
-
-    <ion-item-sliding class="product-item">
-      <ion-item>
-
-
-          <ion-input label="Envase de 10 kg" type="number" placeholder="000"></ion-input>
-
-
-        <ion-item-options side="end">
-          <ion-item-option color="primary" >Canje</ion-item-option>
-        </ion-item-options>
-
-      </ion-item>
-    </ion-item-sliding>
-
-    <ion-item-sliding class="product-item">
-      <ion-item>
-
-          <ion-input label="Envase de 15 kg" type="number" placeholder="000"></ion-input>
-
-
-        <ion-item-options side="end">
-          <ion-item-option color="primary" >Canje</ion-item-option>
-        </ion-item-options>
-
-
-      </ion-item>
-    </ion-item-sliding>
-
-    <ion-item-sliding class="product-item">
-      <ion-item>
-
-          <ion-input label="Envase de 45 kg" type="number" placeholder="000"></ion-input>
-
-
-        <ion-item-options side="end">
-          <ion-item-option color="primary" >Canje</ion-item-option>
-        </ion-item-options>
-
-
-      </ion-item>
-
-
-
-    </ion-item-sliding>
-
-
-    <ion-item-sliding class="product-item">
-      <ion-item>
-
-        <ion-item>
-          <ion-select label="Seleccione metodo de pago" label-placement="floating">
-            <ion-select-option value="mercado_pago">MercadoPago</ion-select-option>
-            <ion-select-option value="Efectivo">Efectivo</ion-select-option>
-            <ion-select-option value="cheque">Cheque</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-
-      </ion-item>
-
-    </ion-item-sliding>
-
-
-    <ion-item-sliding class="product-item">
-      <ion-item>
-        <ion-input
-        ion-input label="Observacion"
-        label-placement="Observacion"
-        fill="outline" maxlength="300"
-        placeholder="">
-      </ion-input>
-
-      </ion-item>
-    </ion-item-sliding>
-  </ion-list>
-
-
-<ion-button routerLink="/main/sales" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
-  Guardar
-  <ion-icon style="margin-left: 3%;" name="save-outline"></ion-icon>
-</ion-button>
+    <div class="container__button">
+      <ion-button type="submit" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+        Continuar
+      </ion-button>
+      <ion-button routerLink="/main/clients" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
+        Volver
+      </ion-button>
+    </div>
+  </form>
 </ion-content>

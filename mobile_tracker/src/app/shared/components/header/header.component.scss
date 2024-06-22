@@ -2,6 +2,10 @@
     --background: #031D38;
 }
 
+.hamburguer{
+    color: #fcfcfc;
+}
+
 
 ion-header ion-toolbar {
     padding: 10px 15px;
@@ -17,4 +21,11 @@ ion-header img {
     z-index: 100;
     transform: translate(-40px, -10px);
     filter: opacity(50%);
+}
+
+ion-title{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

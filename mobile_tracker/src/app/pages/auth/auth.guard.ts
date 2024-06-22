@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AuthGuard implements CanActivate {
   
-  private isActive = false; // Control para activar/desactivar el guardia
+  private isActive = true; // Control para activar/desactivar el guardia
 
   constructor(private authService: AuthService, private router: Router) {}
 

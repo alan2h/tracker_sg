@@ -1,0 +1,24 @@
+
+.message__container {
+    width: 100;
+}
+
+.message__row {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+
+.icon__col{
+    max-width: 20%;
+}
+
+.content__col {
+    min-width: 60%;
+    height: 100%;
+}
+.name {
+}
+.data {
+}

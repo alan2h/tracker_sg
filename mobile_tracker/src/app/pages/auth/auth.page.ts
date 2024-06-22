@@ -16,7 +16,7 @@ export class AuthPage implements OnInit {
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      pwd_user: ['', Validators.required]
+      password: ['', Validators.required]
     });
   }
 
@@ -26,11 +26,15 @@ export class AuthPage implements OnInit {
     if (this.loginForm.valid) {
       try {
         const response = await firstValueFrom(this.authService.login(this.loginForm.value));
-        console.log(response.userData);
-        localStorage.setItem('token', response.userData);
-        this.router.navigate(['/main/home']);
+
+        if (response && response.token) {
+          sessionStorage.setItem('token', response.token);
+          this.router.navigate(['/main/home']);
+        } else {
+          throw new Error('Respuesta de inicio de sesión no válida');
+        }
       } catch (error: any) {
-        console.error(error);
+        console.error('Error durante el inicio de sesión:', error);
         if (error.status === 422) {
           this.errorMessage = 'Datos de entrada no válidos. Por favor verifica tu información.';
         } else if (error.status === 403 || error.status === 401) {
