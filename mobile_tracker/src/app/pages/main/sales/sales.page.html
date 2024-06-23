@@ -38,14 +38,11 @@
         <ion-item-sliding *ngFor="let sale of sales.controls; let i = index" [formGroupName]="i" class="product-item">
           <ion-item>
             <ion-input [label]="sale.value.label" type="number" placeholder="" formControlName="value"></ion-input>
-            <ion-item-options side="end" *ngIf="sale.value.label.includes('Envase')">
-              <ion-button color="primary" (click)="toggleIsChange(i)">
-                {{ sale.value.isChange ? 'Volver' : 'Canje' }}
-              </ion-button>
-            </ion-item-options>
+            <ion-button color="primary" *ngIf="sale.value.label.includes('Envase')" (click)="toggleIsChange(i)">
+              {{ sale.value.isChange ? 'Volver' : 'Canje' }}
+            </ion-button>
           </ion-item>
         </ion-item-sliding>
-        
       </div>
 
       <ion-item>
@@ -65,7 +62,7 @@
       <ion-button type="submit" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
         Continuar
       </ion-button>
-      <ion-button routerLink="/main/clients" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
+      <ion-button (click)="navigateBack()" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
         Volver
       </ion-button>
     </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from './main.service'; // Asegúrate de actualizar esta ruta
 
 @Component({
   selector: 'app-main',
@@ -10,6 +11,7 @@ export class MainPage implements OnInit {
 
   router = inject(Router);
   currentPath: string = '';
+  userData: any = null;
 
   pages = [
     {
@@ -32,14 +34,22 @@ export class MainPage implements OnInit {
       url: '/main/profile',
       icon: 'person-outline'
     },
-
   ];
+
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.router.events.subscribe((event: any) => {
-      console.log(event);
       if (event?.url) this.currentPath = event.url;
-    })
-  }
+    });
 
+    this.userService.getUserData().subscribe(
+      (data) => {
+        this.userData = data.users_data;
+      },
+      (error) => {
+        console.error('Error al obtener los datos del usuario:', error);
+      }
+    );
+  }
 }

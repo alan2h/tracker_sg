@@ -1,13 +1,31 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>detailSale</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [menuShow]="true" title="Detalles de la venta"></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">detailSale</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <div *ngIf="errorMessage">
+    <ion-text color="danger">
+      <h2>{{ errorMessage }}</h2>
+    </ion-text>
+  </div>
+
+  <div *ngIf="!errorMessage">
+    <ion-list>
+      <ion-item *ngFor="let sale of salesHistory">
+        <ion-label>
+          <h2>{{ sale.label }}</h2>
+          <p>Valor: {{ sale.value }}</p>
+          <p *ngIf="sale.isChange">Canjeado</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="container__button">
+    <ion-button type="submit" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+      Confirmar venta y continuar
+    </ion-button>
+    <ion-button (click)="navigateBack()" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
+      Volver
+    </ion-button>
+  </div>
 </ion-content>

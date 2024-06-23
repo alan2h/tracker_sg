@@ -1,9 +1,7 @@
 <ion-menu contentId="menu-content" menuId="menu-content" side="start" type="overlay">
-
   <app-header title="Menu"></app-header>
-
   <ion-content [fullscreen]="true" class="ion-text-center">
-    <ion-item>
+    <ion-item *ngIf="userData">
       <ion-grid>
         <ion-row class="ion-justify-content-center ion-align-items-center">
           <ion-col>
@@ -11,17 +9,14 @@
               <img src="../../../assets//ProfileExample.jfif">
             </ion-avatar>
           </ion-col>
-
         </ion-row>
         <ion-row class="ion-justify-content-center ion-align-items-center">
           <ion-col>
-            <h4>{{ 'user' }}</h4>
+            <h4>{{ userData.name }}</h4>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
-
-
     <ion-item *ngFor="let p of pages" [ngClass]="{'active': currentPath === p.url}" [routerLink]="p.url"
       routerDirection="root" detail>
       <ion-menu-toggle autoHide="false">
@@ -32,7 +27,5 @@
       </ion-menu-toggle>
     </ion-item>
   </ion-content>
-
-</ion-menu>
-
+</ion-menu >
 <ion-router-outlet id="menu-content" main></ion-router-outlet>

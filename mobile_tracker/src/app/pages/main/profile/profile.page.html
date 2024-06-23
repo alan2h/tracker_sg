@@ -1,18 +1,65 @@
 <app-header [menuShow]="true" title="Perfil"></app-header>
-<ion-content class="ion-padding ion-text-center">
+<ion-content class="ion-padding ion-text-center" *ngIf="isDataLoaded">
   <ion-avatar>
-    <ion-icon class="empty-icon" name="person-circle-outline" [ngStyle]="{'color': 'black'}"></ion-icon>
+    <img src="../../../assets//ProfileExample.jfif">  
   </ion-avatar>
-  <ion-button class="photo-btn" size="small" mode="ios" shape="round">
-    <ion-icon name="camera"></ion-icon>
-  </ion-button>
-  <h4>Alan Beck</h4>
+  <h4>{{ driverData.name_driver }}</h4>
   <div class="cargo">
     Director General
   </div>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        <h2>Nombre</h2>
+        <p>{{ driverData.name_driver }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>DNI</h2>
+        <p>{{ driverData.dni }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>Email</h2>
+        <p>{{ driverData.email }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>Teléfono</h2>
+        <p>{{ driverData.phone }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>Dirección</h2>
+        <p>{{ driverData.address }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>Fecha de Registro</h2>
+        <p>{{ driverData.date_joined | date }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>Último Inicio de Sesión</h2>
+        <p>{{ driverData.last_login | date }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
   <ion-button routerLink="/auth" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
     Cerrar Sesion
     <ion-icon style="margin-left: 3%;" name="exit-outline"></ion-icon>
   </ion-button>
+</ion-content>
+<ion-content *ngIf="!isDataLoaded">
+  <div class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
 </ion-content>

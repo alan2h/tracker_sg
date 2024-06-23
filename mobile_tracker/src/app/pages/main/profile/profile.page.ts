@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../main.service'; // Asegúrate de actualizar esta ruta
 
 @Component({
   selector: 'app-profile',
@@ -6,10 +7,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  driverData: any = {};
+  isDataLoaded = false;
 
-  constructor() { }
+  constructor(private userService: UserService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      this.loadUserData();
+    } else {
+      console.error('No se encontró ningún token en sessionStorage');
+    }
   }
 
+  loadUserData(): void {
+    this.userService.getUserData().subscribe({
+      next: (data) => {
+        this.driverData = data.driver_data;
+        this.isDataLoaded = true;
+      },
+      error: (error) => {
+        console.error('Error al obtener los datos del conductor:', error);
+      }
+    });
+  }
 }

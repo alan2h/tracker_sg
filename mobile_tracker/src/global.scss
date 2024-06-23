@@ -33,6 +33,12 @@
   --button-red-0-text: #f73737;
 }
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 body{
   font-style: system-ui;
 }

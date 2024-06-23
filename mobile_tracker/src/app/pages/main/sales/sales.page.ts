@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sales',
@@ -9,7 +10,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 export class SalesPage implements OnInit {
   salesForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.salesForm = this.fb.group({
       sales: this.fb.array([]),
       paymentMethod: ['', Validators.required],
@@ -22,6 +23,12 @@ export class SalesPage implements OnInit {
     this.addSale('Envase de 10 kg');
     this.addSale('Envase de 15 kg');
     this.addSale('Envase de 45 kg');
+
+    // Intentar recuperar el formulario desde localStorage si existe
+    const salesFormData = localStorage.getItem('salesFormData');
+    if (salesFormData) {
+      this.salesForm.patchValue(JSON.parse(salesFormData));
+    }
   }
 
   ngOnInit() { }
@@ -42,22 +49,24 @@ export class SalesPage implements OnInit {
 
   onSubmit() {
     if (this.salesForm.valid) {
-      console.log(this.salesForm.value);
+      localStorage.setItem('salesFormData', JSON.stringify(this.salesForm.value));
+      
+
+      this.router.navigate(['/main/detail_sale']);
     } else {
       console.log('Formulario no válido');
     }
   }
 
   toggleIsChange(index: number) {
-    console.log('Index:', index);
     const sale = this.sales.at(index);
-    console.log('Sale:', sale?.value);
     if (sale) {
       const currentValue = sale.get('isChange')?.value;
-      console.log('Current Value:', currentValue);
       sale.get('isChange')?.setValue(!currentValue);
-      console.log('New Value:', sale.get('isChange')?.value);
     }
   }
-  
+
+  navigateBack(){
+    this.router.navigate(['/main/clients']);
+  }
 }

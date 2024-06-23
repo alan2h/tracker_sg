@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { QuestionService } from './home.service';
+import { UserService } from '../main.service'; // Asegúrate de actualizar esta ruta
 
 interface Question {
   id: number;
@@ -21,14 +22,15 @@ interface Answer {
 })
 export class HomePage implements OnInit {
   conductorNombre: string = '';
-  dominio: string = '';
+  dominio: string = '-';
   questions: Question[] = [];
   answers: { [key: number]: Answer } = {};
 
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private userService: UserService // Inyectar el servicio UserService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class HomePage implements OnInit {
     if (token) {
       try {
         this.loadQuestions(token);
+        this.loadUserData(); // Cargar los datos del usuario
       } catch (error) {
         console.error('Error al parsear el token:', error);
       }
@@ -52,6 +55,17 @@ export class HomePage implements OnInit {
       },
       error: (error) => {
         console.error('Error al obtener las preguntas:', error);
+      }
+    });
+  }
+
+  loadUserData(): void {
+    this.userService.getUserData().subscribe({
+      next: (data) => {
+        this.conductorNombre = data.driver_data.name_driver;
+      },
+      error: (error) => {
+        console.error('Error al obtener los datos del conductor:', error);
       }
     });
   }
