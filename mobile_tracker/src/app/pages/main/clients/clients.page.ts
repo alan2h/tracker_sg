@@ -47,7 +47,7 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
       const fixedPoint: L.LatLngExpression = [-26.18547, -58.17421];
 
       const myLocationIcon = L.icon({
-        iconUrl: 'assets/icon/map/pointer.svg',
+        iconUrl: 'assets/icon/map/gas1.svg',
         iconSize: [16, 16],
         iconAnchor: [16, 16],
         popupAnchor: [0, 10],
