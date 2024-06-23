@@ -20,63 +20,48 @@
         <h4>Requisitos</h4>
       </ion-row>
       <ion-row>
-        <p class="message__tip">Seleccione las opciones con las que cuenta, o deslize para realizar un comentario</p>
+        <p class="message__tip">Seleccione las opciones con las que cuenta, o deslice para realizar un comentario</p>
       </ion-row>
     </ion-grid>
 
-    <ion-item-sliding class="product-item">
+    <ng-container *ngFor="let question of questions">
       <ion-item>
-        <ion-checkbox [(ngModel)]="documentation_vehicle">
-          Papeles del vehiculo
-        </ion-checkbox>
-        <ion-item-options class="slidding__button" side="end">
-          <ion-item-option color="primary">Comentario</ion-item-option>
-        </ion-item-options>
+        <ion-grid>
+          <ion-row *ngIf="question.id === 3">
+            <ion-col>
+              <ion-select [(ngModel)]="answers[question.id].check" label="{{ question.description }}" label-placement="floating">
+                <ion-select-option value="10">10%</ion-select-option>
+                <ion-select-option value="20">20%</ion-select-option>
+                <ion-select-option value="30">30%</ion-select-option>
+                <ion-select-option value="40">40%</ion-select-option>
+                <ion-select-option value="50">50%</ion-select-option>
+                <ion-select-option value="60">60%</ion-select-option>
+                <ion-select-option value="70">70%</ion-select-option>
+                <ion-select-option value="80">80%</ion-select-option>
+                <ion-select-option value="90">90%</ion-select-option>
+                <ion-select-option value="100">100%</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="question.id !== 3">
+            <ion-col>
+              <ion-checkbox [(ngModel)]="answers[question.id].check">{{ question.description }}</ion-checkbox>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="question.id !== 3">
+            <ion-col>
+              <ion-button color="light" expand="block" (click)="presentAlert(question.id)">Agregar comentario</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
-    </ion-item-sliding>
+    </ng-container>
 
-    <ion-item-sliding class="product-item">
-      <ion-item>
-        <ion-checkbox [(ngModel)]="documentation_driver">
-          Documentacion del chofer
-        </ion-checkbox>
-        <ion-item-options class="slidding__button" side="end">
-          <ion-item-option color="primary">Comentario</ion-item-option>
-        </ion-item-options>
-      </ion-item>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-select [(ngModel)]="fuel_value" label="Seleccione el nivel de combustible" label-placement="floating">
-          <ion-select-option value="10">10%</ion-select-option>
-          <ion-select-option value="20">20%</ion-select-option>
-          <ion-select-option value="30">30%</ion-select-option>
-          <ion-select-option value="40">40%</ion-select-option>
-          <ion-select-option value="50">50%</ion-select-option>
-          <ion-select-option value="60">60%</ion-select-option>
-          <ion-select-option value="70">70%</ion-select-option>
-          <ion-select-option value="80">80%</ion-select-option>
-          <ion-select-option value="90">90%</ion-select-option>
-          <ion-select-option value="100">100%</ion-select-option>
-        </ion-select>
-        <ion-item-options class="slidding__button" side="end">
-          <ion-item-option color="primary">Comentario</ion-item-option>
-        </ion-item-options>
-      </ion-item>
-    </ion-item-sliding>
-
-    <ion-item-sliding class="product-item">
-      <ion-item>
-        <ion-input [(ngModel)]="observation" label="" label-placement="Observacion" fill="outline" maxlength="300" placeholder="Ingrese una observacion">
-        </ion-input>
-      </ion-item>
-    </ion-item-sliding>
   </ion-list>
 
   <ion-grid class="submit__button__container">
     <ion-row class="submit__button">
-      <ion-button [disabled]="!isFormValid" (click)="confirmar()" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+      <ion-button (click)="confirmar()" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
         Continuar
       </ion-button>
     </ion-row>

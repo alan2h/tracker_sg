@@ -22,10 +22,26 @@ ion-row > ion-item{
 
 .title__requisites__container{
     padding: 10px;
+    margin: 0;
 }
 
-.slidding__button{
-    z-index: 10;
+ion-col{
+    font-size: 15px;
+    padding: 0;
+}
+
+ion-grid{
+    padding: 0;
+    margin: 10px 0;
+}
+
+.observation__input{
+    padding: 10px;
+}
+
+
+.slidding__button ion-item-options ion-button{
+    z-index: 20000;
 }
 
 .submit__button__container{

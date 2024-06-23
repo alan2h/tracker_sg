@@ -38,6 +38,14 @@ const routes: Routes = [
     path: 'confirm',
     loadChildren: () => import('./confirm/confirm.module').then( m => m.ConfirmPageModule)
   },
+  {
+    path: 'detail-sale',
+    loadChildren: () => import('./detail-sale/detail-sale.module').then( m => m.DetailSalePageModule)
+  },
+  {
+    path: 'accounting',
+    loadChildren: () => import('./accounting/accounting.module').then( m => m.AccountingPageModule)
+  },
 
 
 ];

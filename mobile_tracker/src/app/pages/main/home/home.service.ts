@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class QuestionService {
-  private apiUrl = 'https://glpgas.ar/api/questions';
+  private questionsUrl = 'https://glpgas.ar/api/questions';
+  private answersUrl = 'https://glpgas.ar/api/answers/';
 
   constructor(private http: HttpClient) {}
 
@@ -14,6 +15,13 @@ export class QuestionService {
     const headers = new HttpHeaders({
       'Authorization': `token ${token}`
     });
-    return this.http.get<any>(this.apiUrl, { headers });
+    return this.http.get<any>(this.questionsUrl, { headers });
+  }
+
+  sendAnswer(token: string, formData: FormData): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `token ${token}`
+    });
+    return this.http.post<any>(this.answersUrl, formData, { headers });
   }
 }

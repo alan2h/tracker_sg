@@ -40,9 +40,11 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
 
     try {
       // Get current position
-      // const position = await Geolocation.getCurrentPosition(); UBICACION ACTUAL CELULAR
-      const myLocation: L.LatLngExpression = [-26.1788498, -58.1711369];
-      const fixedPoint: L.LatLngExpression = [-26.1775300, -58.1781400];
+      const position = (await Geolocation.getCurrentPosition()).coords;
+
+      const myLocation: L.LatLngExpression = [position.latitude, position.longitude];
+      // const myLocation: L.LatLngExpression = [-26.1788498, -58.1711369];
+      const fixedPoint: L.LatLngExpression = [-26.18547, -58.17421];
 
       const myLocationIcon = L.icon({
         iconUrl: 'assets/icon/map/pointer.svg',
@@ -61,6 +63,7 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
       if (this.myLocationMarker) {
         this.map.removeLayer(this.myLocationMarker);
       }
+      
       this.myLocationMarker = L.marker(myLocation, { icon: myLocationIcon }).addTo(this.map).bindPopup('Mi Ubicación').openPopup();
 
       if (this.fixedPointMarker) {
