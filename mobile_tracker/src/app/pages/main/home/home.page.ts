@@ -25,6 +25,7 @@ export class HomePage implements OnInit {
   dominio: string = '-';
   questions: Question[] = [];
   answers: { [key: number]: Answer } = {};
+  isDataLoaded: boolean = false; // Nueva variable para el estado de carga
 
   constructor(
     private router: Router,
@@ -52,9 +53,11 @@ export class HomePage implements OnInit {
       next: (response: Question[]) => {
         this.questions = response;
         this.initializeAnswers();
+        this.checkDataLoaded();
       },
       error: (error) => {
         console.error('Error al obtener las preguntas:', error);
+        this.checkDataLoaded();
       }
     });
   }
@@ -63,9 +66,11 @@ export class HomePage implements OnInit {
     this.userService.getUserData().subscribe({
       next: (data) => {
         this.conductorNombre = data.driver_data.name_driver;
+        this.checkDataLoaded();
       },
       error: (error) => {
         console.error('Error al obtener los datos del conductor:', error);
+        this.checkDataLoaded();
       }
     });
   }
@@ -78,6 +83,12 @@ export class HomePage implements OnInit {
         comentario: ''
       };
     });
+  }
+
+  checkDataLoaded(): void {
+    if (this.questions.length > 0 && this.conductorNombre) {
+      this.isDataLoaded = true;
+    }
   }
 
   async presentAlert(questionId: number) {

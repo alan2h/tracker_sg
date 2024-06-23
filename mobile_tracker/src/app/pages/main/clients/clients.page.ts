@@ -83,7 +83,6 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
       this.routingControl = (L as any).Routing.control({
         waypoints: [
           L.latLng(myLocation[0], myLocation[1]),
-          // L.latLng(position.coords.latitude, position.coords.longitude), UBICACION ACTUAL
           L.latLng(fixedPoint[0], fixedPoint[1])
         ],
         routeWhileDragging: true,
@@ -104,7 +103,6 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
       console.error('Error obteniendo ubicación', error);
     }
 
-    // Initially hide the route instructions panel
     this.toggleInstructions(false);
   }
 

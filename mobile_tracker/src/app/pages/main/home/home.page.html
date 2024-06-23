@@ -1,5 +1,5 @@
 <app-header [menuShow]="true" title="Cuestionario"></app-header>
-<ion-content>
+<ion-content *ngIf="isDataLoaded">
   <ion-list>
     <ion-grid class="car__info__container">
       <ion-row>
@@ -65,4 +65,10 @@
       </ion-button>
     </ion-row>
   </ion-grid>
+</ion-content>
+
+<ion-content *ngIf="!isDataLoaded">
+  <div class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
 </ion-content>
