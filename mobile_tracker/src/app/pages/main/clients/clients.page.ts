@@ -1,7 +1,9 @@
+// src/app/pages/clients/clients.page.ts
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { Geolocation } from '@capacitor/geolocation';
+import { ClientService } from './clients.service';
 
 @Component({
   selector: 'app-clients',
@@ -13,11 +15,15 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
   private myLocationMarker!: L.Marker;
   private fixedPointMarker!: L.Marker;
   private routingControl!: any;
-  private instructionsVisible: boolean = false; // Variable to track visibility
+  private instructionsVisible: boolean = false;
 
-  constructor() { }
+  clientData: any;
 
-  ngOnInit() { }
+  constructor(private clientService: ClientService) {}
+
+  ngOnInit() {
+    this.fetchClientData();
+  }
 
   ngAfterViewInit() {
     this.initMap();
@@ -27,6 +33,16 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
     if (this.map) {
       this.map.remove();
     }
+  }
+
+  private fetchClientData() {
+    this.clientService.getClientData().subscribe(data => {
+      this.clientData = data;
+      localStorage.setItem('customer_id', data.customer);
+      this.updateMap(data.latitude, data.longitude);
+    }, error => {
+      console.error('Error fetching client data', error);
+    });
   }
 
   private async initMap(): Promise<void> {
@@ -39,12 +55,8 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
     }).addTo(this.map);
 
     try {
-      // Get current position
       const position = (await Geolocation.getCurrentPosition()).coords;
-
       const myLocation: L.LatLngExpression = [position.latitude, position.longitude];
-      // const myLocation: L.LatLngExpression = [-26.1788498, -58.1711369];
-      const fixedPoint: L.LatLngExpression = [-26.18547, -58.17421];
 
       const myLocationIcon = L.icon({
         iconUrl: 'assets/icon/map/gas1.svg',
@@ -53,57 +65,56 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
         popupAnchor: [0, 10],
       });
 
-      const fixedPointIcon = L.icon({
-        iconUrl: 'assets/icon/map/flag.svg',
-        iconSize: [16, 16],
-        iconAnchor: [16, 16],
-        popupAnchor: [0, 10],
-      });
-
       if (this.myLocationMarker) {
         this.map.removeLayer(this.myLocationMarker);
       }
-      
+
       this.myLocationMarker = L.marker(myLocation, { icon: myLocationIcon }).addTo(this.map).bindPopup('Mi Ubicación').openPopup();
 
-      if (this.fixedPointMarker) {
-        this.map.removeLayer(this.fixedPointMarker);
-      }
-      this.fixedPointMarker = L.marker(fixedPoint, { icon: fixedPointIcon }).addTo(this.map).bindPopup('Punto Fijo').openPopup();
-
-      const bounds = L.latLngBounds([myLocation, fixedPoint]);
-
-      setTimeout(() => {
-        this.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
-      }, 2000);
-
-      if (this.routingControl) {
-        this.map.removeControl(this.routingControl);
-      }
-      this.routingControl = (L as any).Routing.control({
-        waypoints: [
-          L.latLng(myLocation[0], myLocation[1]),
-          L.latLng(fixedPoint[0], fixedPoint[1])
-        ],
-        routeWhileDragging: true,
-        language: 'es',
-        createMarker: () => { return null; },
-        lineOptions: {
-          styles: [{ color: 'blue', opacity: 1, weight: 5 }]
-        },
-        addWaypoints: false,
-        draggableWaypoints: false,
-        fitSelectedRoutes: true,
-        showAlternatives: false,
-        summaryTemplate: '<div></div>',
-        collapsible: true,
-        autoRoute: true
-      }).addTo(this.map);
+      this.toggleInstructions(false);
     } catch (error) {
       console.error('Error obteniendo ubicación', error);
     }
+  }
 
-    this.toggleInstructions(false);
+  private updateMap(lat: string, lng: string) {
+    const fixedPoint: L.LatLngExpression = [parseFloat(lat), parseFloat(lng)];
+    const fixedPointIcon = L.icon({
+      iconUrl: 'assets/icon/map/flag.svg',
+      iconSize: [16, 16],
+      iconAnchor: [16, 16],
+      popupAnchor: [0, 10],
+    });
+
+    if (this.fixedPointMarker) {
+      this.map.removeLayer(this.fixedPointMarker);
+    }
+
+    this.fixedPointMarker = L.marker(fixedPoint, { icon: fixedPointIcon }).addTo(this.map).bindPopup('Punto Fijo').openPopup();
+
+    if (this.routingControl) {
+      this.map.removeControl(this.routingControl);
+    }
+
+    this.routingControl = (L as any).Routing.control({
+      waypoints: [
+        this.myLocationMarker.getLatLng(),
+        fixedPoint
+      ],
+      routeWhileDragging: true,
+      language: 'es',
+      createMarker: () => { return null; },
+      lineOptions: {
+        styles: [{ color: 'blue', opacity: 1, weight: 5 }]
+      },
+      addWaypoints: false,
+      draggableWaypoints: false,
+      fitSelectedRoutes: true,
+      showAlternatives: false,
+      summaryTemplate: '<div></div>',
+      collapsible: true,
+      autoRoute: true
+    }).addTo(this.map);
   }
 
   toggleInstructions(visible: boolean) {

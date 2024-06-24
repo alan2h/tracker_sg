@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SalesService } from './sales.service';
 
 @Component({
   selector: 'app-sales',
@@ -9,38 +10,47 @@ import { Router } from '@angular/router';
 })
 export class SalesPage implements OnInit {
   salesForm: FormGroup;
+  products: any[] = [];
+  datosCliente: any; // Variable para almacenar los datos del cliente
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private salesService: SalesService
+  ) {
     this.salesForm = this.fb.group({
       sales: this.fb.array([]),
       paymentMethod: ['', Validators.required],
       observations: ['']
     });
 
-    this.addSale('Carga de 10 kg');
-    this.addSale('Carga de 15 kg');
-    this.addSale('Carga de 45 kg');
-    this.addSale('Envase de 10 kg');
-    this.addSale('Envase de 15 kg');
-    this.addSale('Envase de 45 kg');
-
     // Intentar recuperar el formulario desde localStorage si existe
     const salesFormData = localStorage.getItem('salesFormData');
     if (salesFormData) {
       this.salesForm.patchValue(JSON.parse(salesFormData));
     }
+
+    // Obtener los datos del cliente desde localStorage
+    const datosClienteString = localStorage.getItem('datosCliente');
+    if (datosClienteString) {
+      this.datosCliente = JSON.parse(datosClienteString);
+    }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.getProducts();
+  }
 
   get sales(): FormArray {
     return this.salesForm.get('sales') as FormArray;
   }
 
-  addSale(label: string) {
+  addSale(product: any) {
     const newSale = this.fb.group({
-      label: [label],
-      value: ['', Validators.required],
+      id: [product.id],
+      label: [`${product.description} (${product.size.number_size} kg)`],
+      quantity: ['', Validators.required],
+      price: [product.price],
       isChange: [false]
     });
 
@@ -49,8 +59,12 @@ export class SalesPage implements OnInit {
 
   onSubmit() {
     if (this.salesForm.valid) {
+      const detailSale = this.sales.value.map((sale: any) => ({
+        product: sale.id,
+        quantity: sale.quantity
+      }));
       localStorage.setItem('salesFormData', JSON.stringify(this.salesForm.value));
-      
+      localStorage.setItem('detail_sale', JSON.stringify(detailSale));
 
       this.router.navigate(['/main/detail_sale']);
     } else {
@@ -58,15 +72,19 @@ export class SalesPage implements OnInit {
     }
   }
 
-  toggleIsChange(index: number) {
-    const sale = this.sales.at(index);
-    if (sale) {
-      const currentValue = sale.get('isChange')?.value;
-      sale.get('isChange')?.setValue(!currentValue);
-    }
-  }
-
   navigateBack(){
     this.router.navigate(['/main/clients']);
+  }
+
+  private getProducts() {
+    this.salesService.getProducts().subscribe(
+      (response) => {
+        this.products = response;
+        this.products.forEach((product) => this.addSale(product));
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
   }
 }

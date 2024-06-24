@@ -1,6 +1,6 @@
 <app-header [menuShow]="true" title="Datos del cliente 1"></app-header>
-<ion-content class="ion-padding ion-text-center">
 
+<ion-content *ngIf="isDataLoaded" class="ion-padding ion-text-center">
   <ion-item>
     <ion-grid class="header__container">
       <ion-row>
@@ -33,43 +33,34 @@
           Direccion:
         </ion-col>
         <ion-col>
-          {{ direccionCliente }}
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          Nro de casa:
-        </ion-col>
-        <ion-col>
-          {{ nroCasaCliente }}
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          Manzana:
-        </ion-col>
-        <ion-col>
-          {{ manzanaCliente }}
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          Observacion:
-        </ion-col>
-        <ion-col>
           {{ observacionCliente }}
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          Telefono:
+          Teléfono:
         </ion-col>
         <ion-col>
           {{ telefonoCliente }}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          Barrio:
+        </ion-col>
+        <ion-col>
+          {{ barrioCliente }}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          Ciudad:
+        </ion-col>
+        <ion-col>
+          {{ ciudadCliente }}
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -82,5 +73,10 @@
       Volver
     </ion-button>
   </div>
-      
+</ion-content>
+
+<ion-content *ngIf="!isDataLoaded">
+  <div class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
 </ion-content>

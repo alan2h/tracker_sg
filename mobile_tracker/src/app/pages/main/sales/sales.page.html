@@ -2,67 +2,90 @@
 <ion-content class="ion-padding ion-text-center">
   <form [formGroup]="salesForm" (ngSubmit)="onSubmit()">
     <ion-list>
+      <!-- Cliente estático, debería ser dinámico según datos del cliente -->
       <ion-item>
         <ion-avatar slot="start">
           <ion-img [src]="'../../../../assets/client.png'"></ion-img>
         </ion-avatar>
         <ion-grid>
           <ion-row>
-            <h4>Pedro Escamoso</h4>
+            <h4>{{ datosCliente.nombre }}</h4>
           </ion-row>
           <ion-row>
             <ion-col><strong>Telefono: </strong></ion-col>
-            <ion-col>{{ '3781482464' }}</ion-col>
+            <ion-col>{{ datosCliente.telefono }}</ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><strong>Domicilio: </strong></ion-col>
-            <ion-col>{{ 'Miguel Gutierrez' }}</ion-col>
+            <ion-col><strong>Barrio: </strong></ion-col>
+            <ion-col>{{ datosCliente.direccion }}</ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><strong>Casa: </strong></ion-col>
-            <ion-col>{{ '1225' }}</ion-col>
+            <ion-col><strong>Direccion: </strong></ion-col>
+            <ion-col>{{ datosCliente.observacion }}</ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
 
+      <!-- Lista de ventas -->
       <ion-grid class="title__requisites__container">
         <ion-row>
           <h4>Ventas</h4>
         </ion-row>
         <ion-row>
-          <p class="message__tip">Cargue los datos de venta realizados a este cliente, o deslize si fue un cambio o devolución</p>
+          <p class="message__tip">Cargue los datos de venta realizados a este cliente</p>
         </ion-row>
       </ion-grid>
 
       <div formArrayName="sales">
-        <ion-item-sliding *ngFor="let sale of sales.controls; let i = index" [formGroupName]="i" class="product-item">
+
+        <ion-grid *ngFor="let sale of sales.controls; let i = index" [formGroupName]="i" class="input__container">
+          <ion-row>
+            <ion-label class="input__label">{{ sale.value.label }}</ion-label>
+
+          </ion-row>
           <ion-item>
-            <ion-input [label]="sale.value.label" type="number" placeholder="" formControlName="value"></ion-input>
-            <ion-button color="primary" *ngIf="sale.value.label.includes('Envase')" (click)="toggleIsChange(i)">
-              {{ sale.value.isChange ? 'Volver' : 'Canje' }}
-            </ion-button>
+
+            <ion-row>
+              <ion-input class="input__input" type="number" placeholder="Cantidad"
+                formControlName="quantity"></ion-input>
+
+            </ion-row>
           </ion-item>
-        </ion-item-sliding>
+
+        </ion-grid>
       </div>
 
       <ion-item>
-        <ion-select label="Seleccione metodo de pago" label-placement="floating" formControlName="paymentMethod">
-          <ion-select-option value="mercado_pago">MercadoPago</ion-select-option>
-          <ion-select-option value="Efectivo">Efectivo</ion-select-option>
-          <ion-select-option value="cheque">Cheque</ion-select-option>
-        </ion-select>
+        <ion-grid>
+          <ion-row>
+            <ion-label class="input__label">Seleccione metodo de pago</ion-label>
+          </ion-row>
+          <ion-row>
+            <ion-select formControlName="paymentMethod">
+              <ion-select-option value="EFECTIVO">Efectivo</ion-select-option>
+              <ion-select-option value="DEBITO">Tarjeta de débito</ion-select-option>
+              <ion-select-option value="MERCADOPAGO">Mercado Pago</ion-select-option>
+              <ion-select-option value="OTROS">Otros</ion-select-option>
+            </ion-select>
+          </ion-row>
+        </ion-grid>
+
+
       </ion-item>
 
       <ion-item>
-        <ion-textarea label="Observaciones" labelPlacement="stacked" placeholder="Ingrese una observación" formControlName="observations"></ion-textarea>
+        <ion-label position="stacked">Observaciones</ion-label>
+        <ion-textarea formControlName="observations" placeholder="Ingrese una observación"></ion-textarea>
       </ion-item>
     </ion-list>
 
+    <!-- Botones de acción -->
     <div class="container__button">
       <ion-button type="submit" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
         Continuar
       </ion-button>
-      <ion-button (click)="navigateBack()" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
+      <ion-button (click)="navigateBack()" class="submit button-red ion-margin-top" expand="block" fill="outline"
+        shape="round">
         Volver
       </ion-button>
     </div>

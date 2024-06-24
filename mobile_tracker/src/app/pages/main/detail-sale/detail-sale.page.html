@@ -1,3 +1,5 @@
+<!-- src/app/pages/detail-sale/detail-sale.page.html -->
+
 <app-header [menuShow]="true" title="Detalles de la venta"></app-header>
 
 <ion-content class="ion-padding">
@@ -13,8 +15,8 @@
       <ion-item *ngFor="let sale of salesHistory">
         <ion-label>
           <h2>{{ sale.label }}</h2>
-          <p>Valor: {{ sale.value }}</p>
-          <p *ngIf="sale.isChange">Canjeado</p>
+          <p>Cantidad: {{ sale.quantity }}</p>
+          <p>Precio: {{ sale.price }}</p>
         </ion-label>
       </ion-item>
     </ion-list>

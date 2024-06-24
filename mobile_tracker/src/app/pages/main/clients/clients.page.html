@@ -1,71 +1,40 @@
-<app-header [menuShow]="true" title="Datos del cliente 1"></app-header>
+<app-header [menuShow]="true" title="Datos del cliente"></app-header>
 <ion-content class="ion-padding ion-text-center">
+  <div id="map" style="height: 50%;"></div>
 
-    <div id="map" style="height: 50%;"></div>
-  
   <ion-grid>
     <ion-row>
       <h4>Datos del cliente</h4>
     </ion-row>
   </ion-grid>
-  <ion-item>
+
+  <ion-item *ngIf="clientData">
     <ion-grid class="customer__container">
       <ion-row>
-        <ion-col>
-          Nombre:
-        </ion-col>
-        <ion-col>
-          Pedro Escamoso
-        </ion-col>
-      </ion-row>
-
-
-      <ion-row>
-        <ion-col>
-          Direccion:
-        </ion-col>
-        <ion-col>
-          Miguel gutierrez 1225 barrio vial
-        </ion-col>
+        <ion-col>Nombre:</ion-col>
+        <ion-col>{{ clientData.name }}</ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col>
-          Nro de casa:
-        </ion-col>
-        <ion-col>
-          1225
-        </ion-col>
+        <ion-col>Ciudad:</ion-col>
+        <ion-col>{{ clientData.neighborhood.city.name }}</ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col>
-          Manzana:
-        </ion-col>
-        <ion-col>
-          -
-        </ion-col>
+        <ion-col>Vecindario:</ion-col>
+        <ion-col>{{ clientData.neighborhood.name }}</ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col>
-          Observacion:
-        </ion-col>
-        <ion-col>
-          "Tiene un perro grande"
-        </ion-col>
+        <ion-col>Descripción del vecindario:</ion-col>
+        <ion-col>{{ clientData.neighborhood.description }}</ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col>
-          Telefono:
-        </ion-col>
-        <ion-col>
-          3781482464
-        </ion-col>
+        <ion-col>Teléfono:</ion-col>
+        <ion-col>{{ clientData.phone }}</ion-col>
       </ion-row>
     </ion-grid>
-
   </ion-item>
 
   <div class="container__button">
