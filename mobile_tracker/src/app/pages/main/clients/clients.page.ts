@@ -34,7 +34,8 @@ export class ClientsPage implements OnInit, OnDestroy {
 
   constructor(private clientService: ClientService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.checkPermissions();
     this.fetchClientData();
     this.initMap();
   }
@@ -42,6 +43,19 @@ export class ClientsPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.map) {
       this.map.remove();
+    }
+  }
+
+  private async checkPermissions() {
+    const permission = await Geolocation.checkPermissions();
+    if (permission.location === 'denied') {
+      const result = await Geolocation.requestPermissions();
+      if (result.location === 'denied') {
+        console.error('El usuario ha denegado el permiso de ubicación.');
+      }
+    }
+    if (permission.location !== 'granted') {
+      console.error('El permiso de ubicación no está completamente concedido.');
     }
   }
 
