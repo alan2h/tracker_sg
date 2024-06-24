@@ -25,13 +25,13 @@ export class HomePage implements OnInit {
   dominio: string = '-';
   questions: Question[] = [];
   answers: { [key: number]: Answer } = {};
-  isDataLoaded: boolean = false; // Nueva variable para el estado de carga
+  isDataLoaded: boolean = false;
 
   constructor(
     private router: Router,
     private alertController: AlertController,
     private questionService: QuestionService,
-    private userService: UserService // Inyectar el servicio UserService
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class HomePage implements OnInit {
     if (token) {
       try {
         this.loadQuestions(token);
-        this.loadUserData(); // Cargar los datos del usuario
+        this.loadUserData();
       } catch (error) {
         console.error('Error al parsear el token:', error);
       }
@@ -135,7 +135,6 @@ export class HomePage implements OnInit {
         if (this.answers.hasOwnProperty(questionId)) {
           const answer = this.answers[questionId];
 
-          // Verificar si es la pregunta con id === 3 y ajustar comentario
           if (questionId === '3') {
             const selectedValue = this.answers[questionId].check;
             if (selectedValue !== undefined) {

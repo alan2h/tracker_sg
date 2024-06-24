@@ -17,7 +17,12 @@ export class MainPage implements OnInit {
     {
       title: 'Cuestionario',
       url: '/main/home',
-      icon: 'home-outline'
+      icon: 'clipboard'
+    },
+    {
+      title: 'Clientes',
+      url: '/main/confirm',
+      icon: 'people'
     },
     {
       title: 'Gastos',

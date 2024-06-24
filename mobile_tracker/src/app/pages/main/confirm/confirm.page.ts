@@ -67,8 +67,4 @@ export class ConfirmPage implements OnInit {
     this.router.navigate(['/main/clients']);
   }
 
-  volver() {
-    this.router.navigate(['/main/home']);
-    localStorage.removeItem('datosCliente');
-  }
 }
