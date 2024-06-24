@@ -1,4 +1,4 @@
-<app-header [menuShow]="true" title="Datos del cliente 1"></app-header>
+<app-header [menuShow]="true" title="{{ nombreCliente }}"></app-header>
 
 <ion-content *ngIf="isDataLoaded" class="ion-padding ion-text-center">
   <ion-item>
@@ -71,6 +71,10 @@
     </ion-button>
   </div>
 </ion-content>
+
+<ion-alert [isOpen]="isAlertOpen" header="No hay entregas disponibles"
+message="Actualmente no hay entregas pendientes, intentelo de nuevo mas tarde" [buttons]="alertButtons"
+(didDismiss)="setOpen(false)"></ion-alert>
 
 <ion-content *ngIf="!isDataLoaded">
   <div class="spinner-container">

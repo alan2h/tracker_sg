@@ -26,6 +26,15 @@ export class HomePage implements OnInit {
   questions: Question[] = [];
   answers: { [key: number]: Answer } = {};
   isDataLoaded: boolean = false;
+  isAlertOpen: boolean = false;
+  alertButtons = [
+    {
+      text: 'OK',
+      handler: () => {
+        location.replace('/main/confirm')
+      }
+    }
+  ];
 
   constructor(
     private router: Router,
@@ -34,12 +43,24 @@ export class HomePage implements OnInit {
     private userService: UserService
   ) {}
 
+
   ngOnInit(): void {
+    const hasReloaded = sessionStorage.getItem('hasReloaded');
+    if (!hasReloaded) {
+      sessionStorage.setItem('hasReloaded', 'true');
+      location.reload();
+    } else {
+      sessionStorage.removeItem('hasReloaded');
+      this.initializeComponent();
+    }
+  }
+
+  initializeComponent(): void {
     const token = sessionStorage.getItem('token');
     if (token) {
       try {
-        this.loadQuestions(token);
         this.loadUserData();
+        this.loadQuestions(token);
       } catch (error) {
         console.error('Error al parsear el token:', error);
       }
@@ -47,12 +68,16 @@ export class HomePage implements OnInit {
       console.error('No se encontró ningún token en sessionStorage');
     }
   }
-
+  
   loadQuestions(token: string): void {
     this.questionService.getQuestions(token).subscribe({
       next: (response: Question[]) => {
-        this.questions = response;
-        this.initializeAnswers();
+        if (response.length === 0) {
+          this.isAlertOpen = true;
+        } else {
+          this.questions = response;
+          this.initializeAnswers();
+        }
         this.checkDataLoaded();
       },
       error: (error) => {
@@ -155,9 +180,13 @@ export class HomePage implements OnInit {
         answers: this.answers,
       };
       localStorage.setItem('RequisitesInitTravel', JSON.stringify(RequisitesInitTravel));
-      this.router.navigate(['/main/confirm'], { state: { data: RequisitesInitTravel } });
+      this.router.navigate(['/main/confirm']);
     } catch (error) {
       console.error('Error al enviar respuestas:', error);
     }
+  }
+
+  setOpen(isOpen: boolean): void {
+    this.isAlertOpen = isOpen;
   }
 }

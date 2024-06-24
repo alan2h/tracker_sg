@@ -11,7 +11,7 @@ import { SalesService } from './sales.service';
 export class SalesPage implements OnInit {
   salesForm: FormGroup;
   products: any[] = [];
-  datosCliente: any; // Variable para almacenar los datos del cliente
+  datosCliente: any;
 
   constructor(
     private fb: FormBuilder,
@@ -24,13 +24,11 @@ export class SalesPage implements OnInit {
       observations: ['']
     });
 
-    // Intentar recuperar el formulario desde localStorage si existe
     const salesFormData = localStorage.getItem('salesFormData');
     if (salesFormData) {
       this.salesForm.patchValue(JSON.parse(salesFormData));
     }
 
-    // Obtener los datos del cliente desde localStorage
     const datosClienteString = localStorage.getItem('datosCliente');
     if (datosClienteString) {
       this.datosCliente = JSON.parse(datosClienteString);

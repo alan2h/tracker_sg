@@ -1,4 +1,4 @@
-<app-header [menuShow]="true" title="Datos del cliente"></app-header>
+<app-header [menuShow]="true" title="{{ nombreCliente }}"></app-header>
 <ion-content class="ion-padding ion-text-center">
   <div id="map" style="height: 50%;"></div>
 
@@ -8,31 +8,31 @@
     </ion-row>
   </ion-grid>
 
-  <ion-item *ngIf="clientData">
+  <ion-item >
     <ion-grid class="customer__container">
       <ion-row>
         <ion-col>Nombre:</ion-col>
-        <ion-col>{{ clientData.name }}</ion-col>
+        <ion-col>{{ nombreCliente }}</ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>Ciudad:</ion-col>
-        <ion-col>{{ clientData.neighborhood.city.name }}</ion-col>
+        <ion-col>{{ ciudadCliente }}</ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col>Vecindario:</ion-col>
-        <ion-col>{{ clientData.neighborhood.name }}</ion-col>
+        <ion-col>Barrio:</ion-col>
+        <ion-col>{{ barrioCliente }}</ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col>Descripción del vecindario:</ion-col>
-        <ion-col>{{ clientData.neighborhood.description }}</ion-col>
+        <ion-col>Dirección:</ion-col>
+        <ion-col>{{ observacionCliente }}</ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>Teléfono:</ion-col>
-        <ion-col>{{ clientData.phone }}</ion-col>
+        <ion-col>{{ telefonoCliente }}</ion-col>
       </ion-row>
     </ion-grid>
   </ion-item>
@@ -47,5 +47,10 @@
     <ion-button routerLink="/main/confirm" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
       Volver
     </ion-button>
+
   </div>
+
+  <ion-alert [isOpen]="isAlertOpen" header="No hay entregas disponibles"
+message="Actualmente no hay entregas pendientes, intentelo de nuevo mas tarde" [buttons]="alertButtons"
+(didDismiss)="setOpen(false)"></ion-alert>
 </ion-content>

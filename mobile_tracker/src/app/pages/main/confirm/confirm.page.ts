@@ -17,6 +17,15 @@ export class ConfirmPage implements OnInit {
   barrioCliente: string = '';
   ciudadCliente: string = '';
   isDataLoaded: boolean = false;
+  isAlertOpen: boolean = false;
+  alertButtons = [
+    {
+      text: 'OK',
+      handler: () => {
+        location.replace('/main/profile')
+      }
+    }
+  ];
 
   constructor(private router: Router, private dataService: DataService) { }
 
@@ -39,18 +48,19 @@ export class ConfirmPage implements OnInit {
     });
   }
 
-  loadCustomerData(): Promise<void> {
-    return new Promise((resolve, reject) => {
+  private loadCustomerData() {
       this.dataService.getCustomerData().subscribe(customerData => {
-        const firstCustomer = customerData;
-        this.nombreCliente = firstCustomer.name;
-        this.direccionCliente = firstCustomer.neighborhood.name;
-        this.observacionCliente = firstCustomer.neighborhood.description || '-';
-        this.telefonoCliente = firstCustomer.phone || '-';
-        this.barrioCliente = firstCustomer.neighborhood.name;
-        this.ciudadCliente = firstCustomer.neighborhood.city.name;
-        resolve();
-      }, error => reject(error));
+        if(!customerData.name) {
+          this.isAlertOpen = true;
+        } else{
+          const firstCustomer = customerData;
+          this.nombreCliente = firstCustomer.name;
+          this.direccionCliente = firstCustomer.neighborhood.name;
+          this.observacionCliente = firstCustomer.neighborhood.description || '-';
+          this.telefonoCliente = firstCustomer.phone || '-';
+          this.barrioCliente = firstCustomer.neighborhood.name;
+          this.ciudadCliente = firstCustomer.neighborhood.city.name;
+        }
     });
   }
 
@@ -67,4 +77,7 @@ export class ConfirmPage implements OnInit {
     this.router.navigate(['/main/clients']);
   }
 
+  setOpen(isOpen: boolean): void {
+    this.isAlertOpen = isOpen;
+  }
 }

@@ -49,7 +49,6 @@ export class AccountingPage implements OnInit {
   onSubmit() {
     if (this.accountingForm.valid) {
       localStorage.setItem('accountingFormData', JSON.stringify(this.accountingForm.value));
-      // Lógica para hacer la petición a la API
     } else {
       console.log('Formulario no válido');
     }

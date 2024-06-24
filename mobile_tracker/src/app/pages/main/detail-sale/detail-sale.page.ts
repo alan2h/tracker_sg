@@ -51,7 +51,7 @@ export class DetailSalePage {
           console.log('Venta realizada exitosamente', response);
           localStorage.removeItem('salesFormData');
           localStorage.removeItem('detail_sale');
-          this.router.navigate(['/main/clients']);
+          location.replace('/main/confirm');
         },
         (error) => {
           console.error('Error al realizar la venta', error);

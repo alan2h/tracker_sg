@@ -29,7 +29,8 @@
         <ion-grid>
           <ion-row *ngIf="question.id === 3">
             <ion-col>
-              <ion-select [(ngModel)]="answers[question.id].check" label="{{ question.description }}" label-placement="floating">
+              <ion-select [(ngModel)]="answers[question.id].check" label="{{ question.description }}"
+                label-placement="floating">
                 <ion-select-option value="10">10%</ion-select-option>
                 <ion-select-option value="20">20%</ion-select-option>
                 <ion-select-option value="30">30%</ion-select-option>
@@ -50,7 +51,8 @@
           </ion-row>
           <ion-row *ngIf="question.id !== 3">
             <ion-col>
-              <ion-button color="light" expand="block" (click)="presentAlert(question.id)">Agregar comentario</ion-button>
+              <ion-button color="light" expand="block" (click)="presentAlert(question.id)">Agregar
+                comentario</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -66,6 +68,10 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<ion-alert [isOpen]="isAlertOpen" header="Alerta de Redirección"
+message="Ya ha respondido este cuestionario, sera redirigido a la pagina de clientes" [buttons]="alertButtons"
+(didDismiss)="setOpen(false)"></ion-alert>
 
 <ion-content *ngIf="!isDataLoaded">
   <div class="spinner-container">

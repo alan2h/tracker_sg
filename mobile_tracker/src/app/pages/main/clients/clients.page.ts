@@ -1,4 +1,3 @@
-// src/app/pages/clients/clients.page.ts
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
@@ -10,22 +9,33 @@ import { ClientService } from './clients.service';
   templateUrl: './clients.page.html',
   styleUrls: ['./clients.page.scss'],
 })
-export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
+export class ClientsPage implements OnInit, OnDestroy {
   private map!: L.Map;
   private myLocationMarker!: L.Marker;
   private fixedPointMarker!: L.Marker;
   private routingControl!: any;
   private instructionsVisible: boolean = false;
-
+  nombreCliente: string = '';
+  direccionCliente: string = '';
+  observacionCliente: string = '';
+  telefonoCliente: string = '';
+  barrioCliente: string = '';
+  ciudadCliente: string = '';
+  isAlertOpen: boolean = false;
+  alertButtons = [
+    {
+      text: 'OK',
+      handler: () => {
+        location.replace('/main/accounting')
+      }
+    }
+  ];
   clientData: any;
 
   constructor(private clientService: ClientService) {}
 
   ngOnInit() {
     this.fetchClientData();
-  }
-
-  ngAfterViewInit() {
     this.initMap();
   }
 
@@ -37,9 +47,19 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
 
   private fetchClientData() {
     this.clientService.getClientData().subscribe(data => {
-      this.clientData = data;
-      localStorage.setItem('customer_id', data.customer);
-      this.updateMap(data.latitude, data.longitude);
+      if(!data.name) {
+        this.isAlertOpen = true;
+      } else{
+        console.log(data);
+        this.nombreCliente = data.name;
+          this.direccionCliente = data.neighborhood.name;
+          this.observacionCliente = data.neighborhood.description || '-';
+          this.telefonoCliente = data.phone || '-';
+          this.barrioCliente = data.neighborhood.name;
+          this.ciudadCliente = data.neighborhood.city.name;
+        localStorage.setItem('customer_id', data.id);
+        this.updateMap(data.latitude, data.longitude);
+      }
     }, error => {
       console.error('Error fetching client data', error);
     });
@@ -127,5 +147,9 @@ export class ClientsPage implements OnInit, AfterViewInit, OnDestroy {
 
   onToggleInstructions() {
     this.toggleInstructions(!this.instructionsVisible);
+  }
+
+  setOpen(isOpen: boolean): void {
+    this.isAlertOpen = isOpen;
   }
 }
