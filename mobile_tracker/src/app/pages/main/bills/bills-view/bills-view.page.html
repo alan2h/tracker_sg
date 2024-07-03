@@ -1,0 +1,51 @@
+<app-header [menuShow]="true" title="Mis Gastos"></app-header>
+
+<ion-content *ngIf="isDataLoaded" [fullscreen]="true">
+    <ion-button (click)="navigateBack()" class="button__outline__blue" expand="block" fill="outline"
+    shape="round">
+    Volver
+  </ion-button>
+
+    <ion-item *ngFor="let bill of bills; let i = index">
+        <ion-grid >
+            <ion-row>
+                <ion-col class="name__bill">
+                    <p>{{ bill.concept.name }}</p>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col>
+                    Fecha:
+                </ion-col>
+                <ion-col>
+                    <p>{{ bill.date }}</p>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col class="amount__bill">
+                    <p>Monto:</p>
+                </ion-col>
+                <ion-col>
+                    <p>${{ bill.amount }}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col class="description__bill">
+                    <p>Descripción:</p>
+                </ion-col>
+                <ion-col>
+                    <p>{{ bill.description }}</p>
+                </ion-col>
+            </ion-row>
+    </ion-grid>
+
+    </ion-item>
+</ion-content>
+
+<ion-content *ngIf="!isDataLoaded">
+    <div class="spinner-container">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ion-content>

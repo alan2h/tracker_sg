@@ -1,0 +1,29 @@
+
+ion-row{
+    min-width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+ion-col p{
+    width: fit-content;
+}
+
+.name__bill{
+    font-weight: 600;
+}
+
+ion-col, p{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: fit-content;
+    padding: 0;
+    margin: 5px 0;
+}
+
+ion-button{
+    margin: 20px 0;
+    padding: 0 20px;
+}

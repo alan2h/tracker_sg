@@ -6,7 +6,31 @@
     margin: 0;
 }
 
-.title__requisites__container{
-    padding: 10px;
-    text-align: left;
+ion-list{
+    min-height: calc(100vh - 20vh);
+}
+
+.group__container{
+    margin: 10px 0;
+}
+
+.title__slot.total{
+    font-weight: 600;
+}
+
+.title__slot{
+    min-width: 80px;
+}
+
+.amount__total{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    min-width: 100%;
+}
+
+.amount__total__label{
+    background: var(--blue-text);
+    color: var(--white-text);
 }

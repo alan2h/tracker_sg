@@ -1,34 +1,134 @@
 <app-header [menuShow]="true" title="Ajustes de caja"></app-header>
 <ion-content class="ion-padding ion-text-center">
-  <form [formGroup]="accountingForm" (ngSubmit)="onSubmit()">
-    <ion-list>
       <ion-grid class="title__requisites__container">
         <ion-row>
-          <h4>Ajustes de Caja</h4>
+          <h3>Rendición de Caja</h3>
         </ion-row>
         <ion-row>
-          <p class="message__tip">Registra todas las transacciones realizadas durante el día</p>
+          <p class="message__tip">Registro de todas las transacciones realizadas durante el día</p>
         </ion-row>
       </ion-grid>
+    
+      <ion-list>
 
-      <div formArrayName="transactions">
-        <ion-item-sliding *ngFor="let transaction of transactions.controls; let i = index" [formGroupName]="i" class="transaction-item">
-          <ion-item>
-            <ion-label>{{ transaction.value.label }}</ion-label>
-            <ion-input type="number" formControlName="value"></ion-input>
+        <ion-item-group class="group__container">
+          <ion-item-divider>
+            <label>Envases</label>
+          </ion-item-divider>
+
+          <ion-item-group>
+            <ion-item>
+              <label class="title__slot" slot="start">Cantidad:</label>
+              <label class="number__slot" slot="end">18</label>
           </ion-item>
-        </ion-item-sliding>
-      </div>
 
-    </ion-list>
+          <ion-item>
+            <label class="title__slot total" slot="start">Total:</label>
+            <label class="number__slot" slot="end">$1118</label>
+          </ion-item>
 
-    <div class="container__button">
-      <ion-button type="submit" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
-        Continuar
-      </ion-button>
-      <ion-button (click)="navigateBack()" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
-        Volver
-      </ion-button>
-    </div>
-  </form>
+          </ion-item-group>
+        </ion-item-group>
+
+        <ion-item-group class="group__container">
+          <ion-item-divider>
+            <label>Envases</label>
+          </ion-item-divider>
+
+          <ion-item-group>
+            <ion-item>
+              <label class="title__slot" slot="start">Cantidad:</label>
+              <label class="number__slot" slot="end">18</label>
+          </ion-item>
+
+          <ion-item>
+            <label class="title__slot total" slot="start">Total:</label>
+            <label class="number__slot" slot="end">$1118</label>
+          </ion-item>
+
+          </ion-item-group>
+        </ion-item-group>
+
+        <ion-item-group class="group__container">
+          <ion-item-divider>
+            <label>Envases</label>
+          </ion-item-divider>
+
+          <ion-item-group>
+            <ion-item>
+              <label class="title__slot" slot="start">Cantidad:</label>
+              <label class="number__slot" slot="end">18</label>
+          </ion-item>
+
+          <ion-item>
+            <label class="title__slot total" slot="start">Total:</label>
+            <label class="number__slot" slot="end">$1118</label>
+          </ion-item>
+
+          </ion-item-group>
+        </ion-item-group>
+        <ion-item-group class="group__container">
+          <ion-item-divider>
+            <label>Envases</label>
+          </ion-item-divider>
+
+          <ion-item-group>
+            <ion-item>
+              <label class="title__slot" slot="start">Cantidad:</label>
+              <label class="number__slot" slot="end">18</label>
+          </ion-item>
+
+          <ion-item>
+            <label class="title__slot total" slot="start">Total:</label>
+            <label class="number__slot" slot="end">$1118</label>
+          </ion-item>
+
+          </ion-item-group>
+        </ion-item-group>
+        <ion-item-group class="group__container">
+          <ion-item-divider>
+            <label>Envases</label>
+          </ion-item-divider>
+
+          <ion-item-group>
+            <ion-item>
+              <label class="title__slot" slot="start">Cantidad:</label>
+              <label class="number__slot" slot="end">18</label>
+          </ion-item>
+
+          <ion-item>
+            <label class="title__slot total" slot="start">Total:</label>
+            <label class="number__slot" slot="end">$1118</label>
+          </ion-item>
+
+          </ion-item-group>
+        </ion-item-group>
+        <ion-item-group class="group__container">
+          <ion-item-divider>
+            <label>Envases</label>
+          </ion-item-divider>
+
+          <ion-item-group>
+            <ion-item>
+              <label class="title__slot" slot="start">Cantidad:</label>
+              <label class="number__slot" slot="end">18</label>
+          </ion-item>
+
+          <ion-item>
+            <label class="title__slot total" slot="start">Total:</label>
+            <label class="number__slot" slot="end">$1118</label>
+          </ion-item>
+
+          </ion-item-group>
+        </ion-item-group>
+
+
+        <ion-item-group class="group__container amount__total">
+          <ion-item-divider class="amount__total__label">
+            <label >Cantidad Total</label>
+            <label slot="end">$12212</label>
+          </ion-item-divider>
+        </ion-item-group>
+      </ion-list>
+
 </ion-content>

@@ -14,15 +14,14 @@ export class SalesService {
 
   constructor(private http: HttpClient) { }
 
-  submitSale(customerId: number, paymentMethod: string, detailSale: any[]): Observable<any> {
+  submitSale(customerId: number, status_payment: string, paymentMethod: string, detailSale: any[], total: number): Observable<any> {
     const body = {
-      total: 0,
+      total: total,
       point_of_sale: customerId,
-      status: 'PAGADO',
+      status: status_payment,
       method_payment: paymentMethod,
       detail: detailSale
     };
-
     console.log(body);
 
     const token = sessionStorage.getItem('token')

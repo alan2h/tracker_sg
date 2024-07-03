@@ -9,68 +9,85 @@ import { SalesService } from './sales.service';
   styleUrls: ['./sales.page.scss'],
 })
 export class SalesPage implements OnInit {
-  salesForm: FormGroup;
   products: any[] = [];
   datosCliente: any;
+  salesForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private router: Router,
     private salesService: SalesService
   ) {
-    this.salesForm = this.fb.group({
-      sales: this.fb.array([]),
-      paymentMethod: ['', Validators.required],
-      observations: ['']
-    });
-
-    const salesFormData = localStorage.getItem('salesFormData');
-    if (salesFormData) {
-      this.salesForm.patchValue(JSON.parse(salesFormData));
-    }
-
     const datosClienteString = localStorage.getItem('datosCliente');
     if (datosClienteString) {
       this.datosCliente = JSON.parse(datosClienteString);
     }
   }
 
-  ngOnInit() {
-    this.getProducts();
+  addElemento() {
+    const newSale = this.formBuilder.group({
+      product: ['', Validators.required],
+      label: ['', Validators.required],
+      quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      price: [''],
+      exchange: [false],
+    });
+    this.sales.push(newSale);
   }
 
-  get sales(): FormArray {
+  ngOnInit() {
+    this.getProducts();
+    this.salesForm = this.formBuilder.group({
+      cliente: this.formBuilder.group({
+        nombre: [this.datosCliente.nombre],
+        telefono: [this.datosCliente.telefono],
+        direccion: [this.datosCliente.direccion],
+        observacion: [this.datosCliente.observacion],
+      }),
+      sales: this.formBuilder.array([]),
+      paymentMethod: ['', Validators.required], // Validador de campo requerido
+      observations: [''],
+    });
+  }
+
+  get sales() {
     return this.salesForm.get('sales') as FormArray;
   }
 
-  addSale(product: any) {
-    const newSale = this.fb.group({
-      id: [product.id],
-      label: [`${product.description} (${product.size.number_size} kg)`],
-      quantity: ['', Validators.required],
-      price: [product.price],
-      isChange: [false]
-    });
-
-    this.sales.push(newSale);
+  removeElemento(index: number) {
+    this.sales.removeAt(index);
   }
 
   onSubmit() {
     if (this.salesForm.valid) {
-      const detailSale = this.sales.value.map((sale: any) => ({
-        product: sale.id,
-        quantity: sale.quantity
+      const listProducts = this.salesForm.value.sales.map((sale: any) => ({ ...sale }));
+      const detailSale = this.salesForm.value.sales.map((sale: any) => ({
+        product: sale.product,
+        quantity: sale.quantity,
+        exchange: sale.exchange
       }));
+
+      localStorage.setItem('productData', JSON.stringify(listProducts));
       localStorage.setItem('salesFormData', JSON.stringify(this.salesForm.value));
       localStorage.setItem('detail_sale', JSON.stringify(detailSale));
 
       this.router.navigate(['/main/detail_sale']);
     } else {
-      console.log('Formulario no válido');
+      this.markFormGroupTouched(this.salesForm);
     }
   }
 
-  navigateBack(){
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      } else {
+        control.markAsTouched();
+      }
+    });
+  }
+
+  navigateBack() {
     this.router.navigate(['/main/clients']);
   }
 
@@ -78,11 +95,21 @@ export class SalesPage implements OnInit {
     this.salesService.getProducts().subscribe(
       (response) => {
         this.products = response;
-        this.products.forEach((product) => this.addSale(product));
       },
       (error) => {
         console.error('Error fetching products', error);
       }
     );
+  }
+
+  onProductChange(event: any, index: number) {
+    const selectedProductId = event.detail.value;
+    const selectedProduct = this.products.find(product => product.id === selectedProductId);
+    if (selectedProduct) {
+      this.sales.at(index).patchValue({
+        price: selectedProduct.price,
+        label: selectedProduct.description
+      });
+    }
   }
 }

@@ -19,19 +19,48 @@
 :root {
   --bg-white-0: #fafafa;
   --header-text-color: #fafafa;
-  --header-bg-color: #0252A9;
+  --header-bg-color: #173476;
   --ion-background-color: #FCFCFC;
   --ion-text-color: #031D38;
   --white-text: #fcfcfc;
-  --blue-text: #031d38;
-  --gray-text: #4d535a;
-  --blue-bg-50: rgba(19, 18, 18, 0.8);
+  --blue-text: #173476;
+  --gray-text: rgb(77, 83, 90);
+  --blue-bg-50: rgba(23, 52, 118, 0.8);
+
+  --yellow-text-08: rgba(255, 147, 30, .8);
+
+  --yellow-0: rgb(255, 147, 30);
+
+  --ion-color-primary: #173476;
+  --ion-color-danger: #bd4949;
+  
   --button-blue-0-color: #fcfcfc;
-  --button-blue-0-text: #031D38;
+  --button-blue-0-text: #173476;
+
+  --button-green-0-color: #2c864e;
+  --button-green-0-bg: #20643a;
+
 
   --button-red-0-color: #fcfcfc;
   --button-red-0-text: #f73737;
+  --error-message-bg: #bd4949;
+  --error-message-text: #fcfcfc;
 }
+
+.input__needed{
+  font-size: 12px;
+  color: var(--yellow-0);
+  font-style: italic;
+  width: 100%;
+  margin: 3px 0;
+  padding: 0;
+
+}
+
+.margin-10{
+  margin: 10px 0;
+}
+
 
 .spinner-container {
   display: flex;
@@ -40,12 +69,12 @@
   height: 100%;
 }
 body{
-  font-style: system-ui;
+  font-family: system-ui;
 }
 
 
 ion-alert .alert-button:first-child {
-  color: red !important;
+  color: #f73737 !important;
 }
 
 ion-item .item-inner {
@@ -60,7 +89,50 @@ ion-icon.black {
   color: black;
 }
 
+.button__outline__blue {
+  --background: var(--button-blue-0-color);
+  --background-hover: var(--button-blue-0-text);
+  --background-activated: var(--button-blue-0-text);
+  --background-focused: var(--button-blue-0-text);
 
+  --color: var(--button-blue-0-text);
+
+  --border-radius: 10px;
+  --border-color: var(--button-blue-0-text);
+  --border-style: solid;
+  --border-width: 1px;
+  --border-radius: 10px;
+
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+  --ripple-color: rgb(255, 255, 255);
+
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+}
+
+.button__only__letters {
+  --background: none;
+  --background-hover: var(--button-blue-0-text);
+  --background-activated: var(--button-blue-0-text);
+  --background-focused: var(--button-blue-0-text);
+
+  --color: var(--button-blue-0-text);
+
+  --border-radius: 0px;
+  --border-color: none;
+  --border-style: solid;
+  --border-width: 0px;
+  --border-radius: 0px;
+
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+  --ripple-color: rgb(255, 255, 255);
+
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  width: 100%;
+}
 
 .safe-p-bottom {
   padding-bottom: constant(safe-area-inset-bottom); // for ios 13+
@@ -156,13 +228,13 @@ ion-input .item-inner {
 
 .button-red {
   --background: var(--button-red-0-color);
-  --background-hover: var(--button-red-0-color);
-  --background-activated: var(--button-red-0-color);
-  --background-focused: var(--button-red-0-color);
+  --background-hover: var(--button-red-0-text);
+  --background-activated: var(--button-red-0-text);
+  --background-focused: var(--button-red-0-text);
 
   --color: var(--button-red-0-text);
 
-  --border-color: --button-red-0-text;
+  --border-color: var(--button-red-0-text);
   --border-style: solid;
   --border-width: 1px;
 
@@ -174,6 +246,32 @@ ion-input .item-inner {
   --padding-bottom: 10px;
 }
 
+.toast__success{
+  color: var(--white-text);
+  --background: var(--button-green-0-color);
+}
+
+.toast__success__outline{
+  color: var(--button-green-0-bg);
+  --background: var(--button-blue-0-color);
+  --border-color: var(--button-green-0-bg);
+  --border-width: 1px;
+  --border-style: solid;
+}
+
+.toast__error{
+  color: var(--white-text);
+  --background: var(--error-message-bg);
+}
+
+
+.toast__info{
+  color: var(--blue-text);
+  --background: var(--button-red-0-color);
+  --border-color: var(--blue-text);
+  --border-width: 1px;
+  --border-style: solid;
+}
 
 
 @media (min-width: 769px) {

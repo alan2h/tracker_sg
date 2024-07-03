@@ -17,7 +17,7 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-    <ion-item *ngFor="let p of pages" [ngClass]="{'active': currentPath === p.url}" [routerLink]="p.url"
+    <ion-item *ngFor="let p of pages" [ngClass]="{'active': currentPath === p.url}" (click)="redirect(p.url)"
       routerDirection="root" detail>
       <ion-menu-toggle autoHide="false">
         <ion-label class="header__menu__item__container">

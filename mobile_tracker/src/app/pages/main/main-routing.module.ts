@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'bills',
-        loadChildren: () => import('./bills/bills.module').then(m => m.BillsPageModule)
+        loadChildren: () => import('./bills/bills-form/bills.module').then(m => m.BillsPageModule)
       },
       {
         path: 'sales',
@@ -43,6 +43,10 @@ const routes: Routes = [
       {
         path: 'accounting',
         loadChildren: () => import('./accounting/accounting.module').then(m => m.AccountingPageModule)
+      },
+      {
+        path: 'mybills',
+        loadChildren: () => import('./bills/bills-view/bills-view.module').then( m => m.BillsViewPageModule)
       },
     ]
   },
