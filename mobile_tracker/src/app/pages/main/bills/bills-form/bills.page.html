@@ -1,0 +1,42 @@
+<app-header [menuShow]="true" title="Mis gastos"></app-header>
+<ion-content class="ion-padding ion-text-center">
+  <form [formGroup]="billsForm">
+    <ion-list>
+      <span class="input__needed">*Este campo es obligatorio</span>
+      <ion-item class="input__container">
+        <ion-select formControlName="conceptId" name="conceptId" label="Concepto" label-placement="floating" fill="solid" placeholder="Concepto">
+          <ion-select-option value="">Seleccione un concepto</ion-select-option>
+          <ion-select-option  *ngFor="let concept of concepts; let i = index" [value]="concept.id">{{ concept.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="formControls['conceptId'].touched && formControls['conceptId'].invalid" class="error-message">
+        Concepto es requerido.
+      </div>
+
+      <span class="input__needed">*Este campo es obligatorio</span>
+      <ion-item class="input__container">
+        <ion-input min="0" type="number" formControlName="amount" name="amount" label="Monto" label-placement="floating" fill="solid" placeholder="Ingrese el monto gastado"></ion-input>
+      </ion-item>
+      <div *ngIf="formControls['amount'].touched && formControls['amount'].invalid" class="error-message">
+        <div *ngIf="formControls['amount'].errors?.['required']">Monto es requerido.</div>
+        <div *ngIf="formControls['amount'].errors?.['min']">El monto debe ser mayor 0.</div>
+      </div>
+
+      <span class="input__needed">*Este campo es obligatorio</span>
+      <ion-item class="input__container">
+        <ion-input type="text" formControlName="descriptionBill" name="descriptionBill" label="Descripcion" label-placement="floating" fill="solid" placeholder="Descripcion del gasto"></ion-input>
+      </ion-item>
+      <div *ngIf="formControls['descriptionBill'].touched && formControls['descriptionBill'].invalid" class="error-message">
+        La descripcion debe ser obligatoria.
+      </div>
+    </ion-list>
+
+    <div *ngIf="formControls" id="present-alert" class="button__submit-bills">
+      <ion-button class="button__submit" (click)="createBill()">Enviar</ion-button>
+    </div>
+    <div class="button__container__viewbills">
+      <ion-button (click)="redirectToMyBills()" class="button__only__letters">Ver mis gastos</ion-button>
+    </div>
+  </form>
+
+</ion-content>

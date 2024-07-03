@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { QuestionService } from './home.service';
-import { UserService } from '../main.service'; // Asegúrate de actualizar esta ruta
+import { UserService } from '../main.service';
+import { ToastController } from '@ionic/angular';
 
 interface Question {
   id: number;
@@ -22,7 +23,7 @@ interface Answer {
 })
 export class HomePage implements OnInit {
   conductorNombre: string = '';
-  dominio: string = '-';
+  dominio: string = '';
   questions: Question[] = [];
   answers: { [key: number]: Answer } = {};
   isDataLoaded: boolean = false;
@@ -40,8 +41,9 @@ export class HomePage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private questionService: QuestionService,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    public toastController: ToastController
+  ) { }
 
 
   ngOnInit(): void {
@@ -68,7 +70,7 @@ export class HomePage implements OnInit {
       console.error('No se encontró ningún token en sessionStorage');
     }
   }
-  
+
   loadQuestions(token: string): void {
     this.questionService.getQuestions(token).subscribe({
       next: (response: Question[]) => {
@@ -82,6 +84,7 @@ export class HomePage implements OnInit {
       },
       error: (error) => {
         console.error('Error al obtener las preguntas:', error);
+        this.presentToast("bottom", "Ha ocurrido un error al obtener los datos del cuestionario, intentelo de nuevo mas tarde.", "toast__error");
         this.checkDataLoaded();
       }
     });
@@ -91,10 +94,12 @@ export class HomePage implements OnInit {
     this.userService.getUserData().subscribe({
       next: (data) => {
         this.conductorNombre = data.driver_data.name_driver;
+        this.dominio = data.driver_data.vehicle_data.domain || "-";
         this.checkDataLoaded();
       },
       error: (error) => {
         console.error('Error al obtener los datos del conductor:', error);
+        this.presentToast("bottom", "Ha ocurrido un error al obtener los datos del cuestionario, intentelo de nuevo mas tarde.", "toast__error");
         this.checkDataLoaded();
       }
     });
@@ -148,6 +153,19 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
+  todosCamposRespondidos(): boolean {
+    for (const questionId in this.answers) {
+      if (this.answers.hasOwnProperty(questionId)) {
+        const answer = this.answers[questionId];
+        if (!answer.check) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+
   async confirmar() {
     const token = sessionStorage.getItem('token');
     if (!token) {
@@ -179,11 +197,24 @@ export class HomePage implements OnInit {
       const RequisitesInitTravel = {
         answers: this.answers,
       };
+      this.presentToast("bottom", "El cuestionario ha sido guardado, redirigiendo a un cliente.", "toast__success");
       localStorage.setItem('RequisitesInitTravel', JSON.stringify(RequisitesInitTravel));
       this.router.navigate(['/main/confirm']);
     } catch (error) {
+      this.presentToast("bottom", "Ha ocurrido un error al responder el cuestionario, intentelo de nuevo mas tarde.", "toast__error");
       console.error('Error al enviar respuestas:', error);
     }
+  }
+
+  async presentToast(position: 'top' | 'middle' | 'bottom', message: string, cssClass: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1500,
+      position: position,
+      cssClass: cssClass
+    });
+
+    await toast.present();
   }
 
   setOpen(isOpen: boolean): void {

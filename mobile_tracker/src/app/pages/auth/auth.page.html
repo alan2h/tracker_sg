@@ -1,37 +1,41 @@
 <app-header title="Ingreso al sistema"></app-header>
 
 <ion-content>
-  <div class="logo__container d-flex flex-center">
-    <ion-item class="header__form">
+  <div class="container__logo">
+    <div class="header__form">
       <app-logo></app-logo>
-    </ion-item>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form__container">
+        <ion-list>
+          <ion-grid>
+            <h3>Iniciar Sesion</h3>
+          </ion-grid>
+    
+          <ion-item class="input__container" [class.invalid]="username?.invalid && (username?.dirty || username?.touched)">
+            <ion-input formControlName="username" labelPlacement="stacked" label="Nombre de Usuario"
+              placeholder="nombre de usuario">
+              <ion-icon slot="start" name="person-outline" aria-hidden="true"></ion-icon>
+            </ion-input>
+          </ion-item>
+          <ion-note *ngIf="username?.invalid && (username?.dirty || username?.touched)" color="danger">
+            Nombre de usuario es requerido
+          </ion-note>
+          <ion-item class="input__container" [class.invalid]="password?.invalid && (password?.dirty || password?.touched)">
+            <ion-input type="password" formControlName="password" labelPlacement="stacked" label="Contraseña"
+              placeholder="contraseña">
+              <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
+            </ion-input>
+          </ion-item>
+          <ion-note *ngIf="password?.invalid && (password?.dirty || password?.touched)" color="danger">
+            Contraseña es requerida
+          </ion-note>
+        </ion-list>
+    
+        <ion-button type="submit" class="button__submit"  [disabled]="loginForm.invalid">Iniciar Sesion</ion-button>
+    
+        <ion-item *ngIf="errorMessage" color="danger">
+          <ion-label>{{ errorMessage }}</ion-label>
+        </ion-item>
+      </form>
+    </div>
   </div>
-
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form__container">
-    <ion-list>
-      <ion-grid>
-        <h3>Iniciar Sesion</h3>
-      </ion-grid>
-
-      <ion-item class="input__container">
-        <ion-input formControlName="username" labelPlacement="stacked" label="Nombre de Usuario"
-          placeholder="nombre de usuario">
-          <ion-icon slot="start" name="person-outline" aria-hidden="true"></ion-icon>
-        </ion-input>
-      </ion-item>
-      <ion-item class="input__container">
-        <ion-input type="password" formControlName="password" labelPlacement="stacked" label="Contraseña"
-          placeholder="contraseña">
-          <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
-        </ion-input>
-      </ion-item>
-    </ion-list>
-
-    <ion-button type="submit" class="button__submit">Iniciar Sesion</ion-button>
-
-
-    <ion-item *ngIf="errorMessage" color="danger" class="error-message">
-      <ion-label>{{ errorMessage }}</ion-label>
-    </ion-item>
-  </form>
 </ion-content>

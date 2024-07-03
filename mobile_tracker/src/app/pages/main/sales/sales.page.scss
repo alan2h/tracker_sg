@@ -14,5 +14,57 @@
 .input__container .input_wrapper{
     display: flex;
     flex-direction: column;
+}
 
+.input__container{
+    border: 1px solid var(--blue-text);
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.quantity__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.change__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product__select__container{
+    min-width: 100%;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.quantity__row__container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.payment__container{
+    margin: 30px 0;
+}
+
+.sales__form__container{
+    margin: 20px 0;
+}
+
+.buttons__container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
 }

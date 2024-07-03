@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { ToastController } from '@ionic/angular';  // Importa ToastController
 
 @Component({
   selector: 'app-auth',
@@ -13,7 +14,12 @@ export class AuthPage implements OnInit {
   loginForm: FormGroup;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private toastController: ToastController // Inyecta ToastController
+  ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -29,6 +35,7 @@ export class AuthPage implements OnInit {
 
         if (response && response.token) {
           sessionStorage.setItem('token', response.token);
+          await this.presentToast('bottom', 'Inicio de sesión exitoso', 'toast__success');
           this.router.navigate(['/main/home']);
         } else {
           throw new Error('Respuesta de inicio de sesión no válida');
@@ -40,9 +47,28 @@ export class AuthPage implements OnInit {
         } else if (error.status === 403 || error.status === 401) {
           this.errorMessage = 'Acceso denegado. Por favor verifica tus credenciales.';
         } else {
-          this.errorMessage = 'Ocurrió un error inesperado. Por favor intenta nuevamente.';
+          this.errorMessage = 'Credenciales de inicio de sesión invalidos.';
         }
       }
     }
+  }
+
+  async presentToast(position: 'top' | 'middle' | 'bottom', message: string, cssClass: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1500,
+      position: position,
+      cssClass: cssClass
+    });
+
+    await toast.present();
+  }
+
+  get username() {
+    return this.loginForm.get('username');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
   }
 }

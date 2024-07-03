@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../main.service'; // Asegúrate de actualizar esta ruta
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +11,7 @@ export class ProfilePage implements OnInit {
   driverData: any = {};
   isDataLoaded = false;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     const token = sessionStorage.getItem('token');
@@ -31,5 +32,10 @@ export class ProfilePage implements OnInit {
         console.error('Error al obtener los datos del conductor:', error);
       }
     });
+  }
+
+  logout(): void{
+    sessionStorage.removeItem('token');
+    location.replace('/auth');
   }
 }

@@ -1,24 +1,43 @@
-<!-- src/app/pages/detail-sale/detail-sale.page.html -->
-
 <app-header [menuShow]="true" title="Detalles de la venta"></app-header>
 
 <ion-content class="ion-padding">
 
-  <div *ngIf="errorMessage">
-    <ion-text color="danger">
-      <h2>{{ errorMessage }}</h2>
-    </ion-text>
+
+  <div class="cancel__message" *ngIf="totalNonExchangeSales === 0 && exchangeSales.length < 1">
+    <p>Si confirma, cancelara la venta.</p>
   </div>
 
   <div *ngIf="!errorMessage">
     <ion-list>
-      <ion-item *ngFor="let sale of salesHistory">
+
+      <div  *ngIf="nonExchangeSales.length">
+        <h2>Ventas</h2>
+      </div>
+      <ion-item *ngFor="let sale of nonExchangeSales">
         <ion-label>
           <h2>{{ sale.label }}</h2>
           <p>Cantidad: {{ sale.quantity }}</p>
           <p>Precio: {{ sale.price }}</p>
         </ion-label>
       </ion-item>
+
+      <div  *ngIf="exchangeSales.length">
+        <h2>Canjes</h2>
+      </div>
+      <ion-item *ngFor="let sale of exchangeSales">
+        <ion-label>
+          <h2>{{ sale.label }}</h2>
+          <p>Cantidad: {{ sale.quantity }}</p>
+          <p>Precio: {{ sale.price }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-group class="group__container amount__total">
+        <ion-item-divider class="amount__total__label">
+          <label >Cantidad Total: </label>
+          <label slot="end">${{ totalNonExchangeSales }}</label>
+        </ion-item-divider>
+      </ion-item-group>
     </ion-list>
   </div>
 

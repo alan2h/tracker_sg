@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { BillsPageRoutingModule } from './bills-routing.module';
-import { BillsPage } from './bills.page';
+import { BillsViewPageRoutingModule } from './bills-view-routing.module';
+import { BillsViewPage } from './bills-view.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -12,9 +12,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    BillsPageRoutingModule,
-    SharedModule // Importa el componente directamente
+    BillsViewPageRoutingModule,
+    SharedModule
   ],
-  declarations: [BillsPage]
+  declarations: [BillsViewPage]
 })
-export class BillsPageModule {}
+export class BillsViewPageModule {}

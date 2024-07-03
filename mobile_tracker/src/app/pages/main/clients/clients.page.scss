@@ -28,13 +28,13 @@ ion-button {
 
 .button__date {
     --background: var(--button-blue-0-color);
-    --background-hover: --button-blue-0-text;
-    --background-activated: --button-blue-0-text;
-    --background-focused: --button-blue-0-text;
+    --background-hover: var(--yellow-0);
+    --background-activated: var(--yellow-0);
+    --background-focused: var(--yellow-0);
 
-    --color: var(--button-blue-0-text);
+    --color: var(--yellow-0);
 
-    --border-color: var(--button-blue-0-text);
+    --border-color: var(--yellow-0);
     --border-style: solid;
     --border-width: 1px;
 

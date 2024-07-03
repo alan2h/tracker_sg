@@ -20,7 +20,7 @@
         <h4>Requisitos</h4>
       </ion-row>
       <ion-row>
-        <p class="message__tip">Seleccione las opciones con las que cuenta, o deslice para realizar un comentario</p>
+        <p class="input__needed">Seleccione las opciones con las que cuenta, tambien puede agregar un comentario</p>
       </ion-row>
     </ion-grid>
 
@@ -62,7 +62,7 @@
 
   <ion-grid class="submit__button__container">
     <ion-row class="submit__button">
-      <ion-button (click)="confirmar()" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+      <ion-button (click)="confirmar()" class="submit ion-margin-top" expand="block" fill="outline" shape="round" [disabled]="!todosCamposRespondidos()">
         Continuar
       </ion-button>
     </ion-row>

@@ -1,0 +1,28 @@
+.total{
+    width: 100%;
+    text-align: right;
+}
+
+.cancel__message{
+    width: 100%;
+    text-align: center;    
+    color: var(--error-message-bg);
+}
+
+
+ion-list{
+    min-height: 55vh;
+}
+
+.amount__total{
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    min-width: 100%;
+}
+
+.amount__total__label{
+    background: var(--blue-text);
+    color: var(--white-text);
+}

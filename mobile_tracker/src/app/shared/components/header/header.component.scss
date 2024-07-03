@@ -9,8 +9,7 @@
 
 ion-header ion-toolbar {
     padding: 10px 15px;
-    --background: rgb(3, 29, 56);
-    --background: linear-gradient(115deg, rgba(3, 29, 56, 1) 0%, rgba(19, 29, 90, 1) 62%, rgba(164, 182, 206, 1) 100%);
+    --background: #173476;
     --ion-text-color: #fcfcfc;
 }
 
@@ -19,8 +18,8 @@ ion-header img {
     right: 0;
     top: 0;
     z-index: 100;
-    transform: translate(-40px, -10px);
-    filter: opacity(50%);
+    width: 40px;
+    height: 40px;
 }
 
 ion-title{

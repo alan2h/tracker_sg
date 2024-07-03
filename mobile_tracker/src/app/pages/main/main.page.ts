@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from './main.service'; // Asegúrate de actualizar esta ruta
+import { UserService } from './main.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-main',
@@ -17,17 +18,22 @@ export class MainPage implements OnInit {
     {
       title: 'Cuestionario',
       url: '/main/home',
-      icon: 'clipboard'
+      icon: 'clipboard-outline'
     },
     {
       title: 'Clientes',
       url: '/main/confirm',
-      icon: 'people'
+      icon: 'people-outline'
     },
     {
       title: 'Gastos',
       url: '/main/bills',
       icon: 'document-outline'
+    },
+    {
+      title: "Rendición",
+      url: "/main/accounting",
+      icon: "document-text-outline"
     },
     {
       title: 'Mensajes',
@@ -41,7 +47,7 @@ export class MainPage implements OnInit {
     },
   ];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, public toastController: ToastController) { }
 
   ngOnInit() {
     this.router.events.subscribe((event: any) => {
@@ -53,8 +59,24 @@ export class MainPage implements OnInit {
         this.userData = data.users_data;
       },
       (error) => {
+      this.presentToast("bottom", "Ha ocurrido un error al obtener los datos del usuario, intentelo de nuevo mas tarde.", "toast__error");
         console.error('Error al obtener los datos del usuario:', error);
       }
     );
+  }
+
+  async presentToast(position: 'top' | 'middle' | 'bottom', message: string, cssClass: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1500,
+      position: position,
+      cssClass: cssClass
+    });
+
+    await toast.present();
+  }
+
+  redirect(url: string) {
+    location.replace(url);
   }
 }
