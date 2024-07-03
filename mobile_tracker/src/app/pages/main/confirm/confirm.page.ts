@@ -102,8 +102,24 @@ export class ConfirmPage implements OnInit {
       observacion: this.observacionCliente,
       telefono: this.telefonoCliente
     };
+    console.log("54" + this.telefonoCliente);
+    let data = {
+      "messaging_product": "whatsapp",
+      "to": "543781482464",
+      "type": "template",
+      "template": { "name": "driver_iscomming",
+        "language": { "code": "es_AR" } }
+    }
 
     localStorage.setItem('datosCliente', JSON.stringify(datosCliente));
+
+    this.dataService.sendMessageWhatsapp(data).subscribe(data => {
+      console.log(data);
+      this.presentToast('bottom', 'Se ha enviado un mensaje  al cliente.', 'toast__success');
+      //setTimeout( () =>{
+      //  location.replace('/main/clients')
+      //}, 3000)
+    })
 
     this.router.navigate(['/main/clients']);
   }
