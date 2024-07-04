@@ -1,134 +1,62 @@
 <app-header [menuShow]="true" title="Ajustes de caja"></app-header>
-<ion-content class="ion-padding ion-text-center">
-      <ion-grid class="title__requisites__container">
-        <ion-row>
-          <h3>Rendición de Caja</h3>
-        </ion-row>
-        <ion-row>
-          <p class="message__tip">Registro de todas las transacciones realizadas durante el día</p>
-        </ion-row>
-      </ion-grid>
-    
-      <ion-list>
+<ion-content *ngIf="isDataLoaded" class="ion-padding ion-text-center">
+  <ion-grid class="title__requisites__container">
+    <ion-row>
+      <h3>Rendición de Caja</h3>
+    </ion-row>
+    <ion-row>
+      <p class="message__tip">Registro de todas las transacciones realizadas durante el día</p>
+    </ion-row>
+  </ion-grid>
 
-        <ion-item-group class="group__container">
-          <ion-item-divider>
-            <label>Envases</label>
-          </ion-item-divider>
+  <ion-list>
 
-          <ion-item-group>
-            <ion-item>
-              <label class="title__slot" slot="start">Cantidad:</label>
-              <label class="number__slot" slot="end">18</label>
-          </ion-item>
+    <!-- Sección para productos con exchange en false -->
+    <ng-container *ngFor="let method of methodPayments">
+      <ion-item-group class="group__container">
+        <ion-item-divider>
+          <label>{{ method }}</label>
+        </ion-item-divider>
 
+        <ion-item-group *ngFor="let productGroup of getExchangeFalseProducts(method) | keyvalue">
           <ion-item>
-            <label class="title__slot total" slot="start">Total:</label>
-            <label class="number__slot" slot="end">$1118</label>
+            <label class="title__slot" slot="start">{{ productGroup.key }}</label>
+            <label class="number__slot" slot="end">{{ getTotalQuantity(productGroup.value) }}</label>
           </ion-item>
-
-          </ion-item-group>
-        </ion-item-group>
-
-        <ion-item-group class="group__container">
-          <ion-item-divider>
-            <label>Envases</label>
-          </ion-item-divider>
-
-          <ion-item-group>
-            <ion-item>
-              <label class="title__slot" slot="start">Cantidad:</label>
-              <label class="number__slot" slot="end">18</label>
-          </ion-item>
-
           <ion-item>
-            <label class="title__slot total" slot="start">Total:</label>
-            <label class="number__slot" slot="end">$1118</label>
+            <label class="title__slot total" slot="start">Subtotal:</label>
+            <label class="number__slot" slot="end">{{ getTotalAmount(productGroup.value) | currency }}</label>
           </ion-item>
-
-          </ion-item-group>
         </ion-item-group>
+      </ion-item-group>
+    </ng-container>
 
-        <ion-item-group class="group__container">
-          <ion-item-divider>
-            <label>Envases</label>
-          </ion-item-divider>
+    <!-- Sección única para Canjes -->
+    <ion-item-group class="group__container">
+      <ion-item-divider>
+        <label>Canjes</label>
+      </ion-item-divider>
 
-          <ion-item-group>
-            <ion-item>
-              <label class="title__slot" slot="start">Cantidad:</label>
-              <label class="number__slot" slot="end">18</label>
-          </ion-item>
+      <ion-item-group *ngFor="let productGroup of getExchangeTrueProducts() | keyvalue">
+        <ion-item>
+          <label class="title__slot" slot="start">{{ productGroup.key }}</label>
+          <label class="number__slot" slot="end">{{ getTotalQuantity(productGroup.value) }}</label>
+        </ion-item>
+      </ion-item-group>
+    </ion-item-group>
 
-          <ion-item>
-            <label class="title__slot total" slot="start">Total:</label>
-            <label class="number__slot" slot="end">$1118</label>
-          </ion-item>
+    <!-- Total General -->
+    <ion-item-group class="group__container amount__total">
+      <ion-item-divider class="amount__total__label">
+        <label>Cantidad Total</label>
+        <label slot="end">{{ getTotalOverallAmount() | currency }}</label>
+      </ion-item-divider>
+    </ion-item-group>
+  </ion-list>
+</ion-content>
 
-          </ion-item-group>
-        </ion-item-group>
-        <ion-item-group class="group__container">
-          <ion-item-divider>
-            <label>Envases</label>
-          </ion-item-divider>
-
-          <ion-item-group>
-            <ion-item>
-              <label class="title__slot" slot="start">Cantidad:</label>
-              <label class="number__slot" slot="end">18</label>
-          </ion-item>
-
-          <ion-item>
-            <label class="title__slot total" slot="start">Total:</label>
-            <label class="number__slot" slot="end">$1118</label>
-          </ion-item>
-
-          </ion-item-group>
-        </ion-item-group>
-        <ion-item-group class="group__container">
-          <ion-item-divider>
-            <label>Envases</label>
-          </ion-item-divider>
-
-          <ion-item-group>
-            <ion-item>
-              <label class="title__slot" slot="start">Cantidad:</label>
-              <label class="number__slot" slot="end">18</label>
-          </ion-item>
-
-          <ion-item>
-            <label class="title__slot total" slot="start">Total:</label>
-            <label class="number__slot" slot="end">$1118</label>
-          </ion-item>
-
-          </ion-item-group>
-        </ion-item-group>
-        <ion-item-group class="group__container">
-          <ion-item-divider>
-            <label>Envases</label>
-          </ion-item-divider>
-
-          <ion-item-group>
-            <ion-item>
-              <label class="title__slot" slot="start">Cantidad:</label>
-              <label class="number__slot" slot="end">18</label>
-          </ion-item>
-
-          <ion-item>
-            <label class="title__slot total" slot="start">Total:</label>
-            <label class="number__slot" slot="end">$1118</label>
-          </ion-item>
-
-          </ion-item-group>
-        </ion-item-group>
-
-
-        <ion-item-group class="group__container amount__total">
-          <ion-item-divider class="amount__total__label">
-            <label >Cantidad Total</label>
-            <label slot="end">$12212</label>
-          </ion-item-divider>
-        </ion-item-group>
-      </ion-list>
-
+<ion-content *ngIf="!isDataLoaded">
+  <div class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
 </ion-content>
