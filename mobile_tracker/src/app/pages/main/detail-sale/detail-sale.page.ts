@@ -82,6 +82,7 @@ export class DetailSalePage {
           this.presentToast("bottom", "La venta ha sido guardada, redirigiendo al siguiente cliente.", "toast__success");
           localStorage.removeItem('salesFormData');
           localStorage.removeItem('detail_sale');
+          localStorage.removeItem('messageSent')
           setTimeout( () =>{
             location.replace('/main/confirm');
           },3000)
