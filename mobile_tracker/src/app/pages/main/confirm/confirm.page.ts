@@ -31,7 +31,7 @@ export class ConfirmPage implements OnInit {
 
   constructor(private router: Router, private dataService: DataService, public toastController: ToastController, private questionService: QuestionService) { }
 
-  ngOnInit(){
+  ngOnInit() {
 
     this.loadData();
 
@@ -40,10 +40,10 @@ export class ConfirmPage implements OnInit {
     if (token) {
       this.questionService.getQuestions(token).subscribe({
         next: (response: any) => {
-        console.log(response)
+          console.log(response)
           if (response.length > 0) {
             this.presentToast('bottom', 'Para poder continuar, primero debes completar el formulario de inicio de viaje.', 'toast__error');
-            setTimeout( () =>{
+            setTimeout(() => {
               location.replace('/main/home')
             }, 3000)
           }
@@ -74,12 +74,12 @@ export class ConfirmPage implements OnInit {
     });
   }
 
-  public loadCustomerData(): Promise<void>  {
+  public loadCustomerData(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.dataService.getCustomerData().subscribe(customerData => {
-        if(!customerData.name) {
+        if (!customerData.name) {
           this.isAlertOpen = true;
-        } else{
+        } else {
           const firstCustomer = customerData;
           this.nombreCliente = firstCustomer.name;
           this.direccionCliente = firstCustomer.neighborhood.name;
@@ -107,21 +107,34 @@ export class ConfirmPage implements OnInit {
       "messaging_product": "whatsapp",
       "to": "543781482464",
       "type": "template",
-      "template": { "name": "driver_iscomming",
-        "language": { "code": "es_AR" } }
+      "template": {
+        "name": "driver_iscomming",
+        "language": { "code": "es_AR" }
+      }
     }
 
     localStorage.setItem('datosCliente', JSON.stringify(datosCliente));
 
-    this.dataService.sendMessageWhatsapp(data).subscribe(data => {
-      console.log(data);
-      this.presentToast('bottom', 'Se ha enviado un mensaje  al cliente.', 'toast__success');
-      //setTimeout( () =>{
-      //  location.replace('/main/clients')
-      //}, 3000)
-    })
+    const messageSent = localStorage.getItem('messageSent');
 
-    this.router.navigate(['/main/clients']);
+    if (!messageSent) {
+      this.dataService.sendMessageWhatsapp(data).subscribe(
+        () => {
+          localStorage.setItem('messageSent', 'true');
+          console.log('Mensaje enviado correctamente.');
+          this.presentToast('bottom', 'Se ha enviado un mensaje al cliente.', 'toast__success');
+          setTimeout( () =>{
+            location.replace('/main/clients');
+          }, 2500)
+        },
+        error => {
+          console.error('Error al enviar el mensaje:', error);
+        }
+      );
+    } else {
+      location.replace('/main/clients');
+      console.log('El mensaje ya se ha enviado anteriormente.');
+    }
   }
 
   setOpen(isOpen: boolean): void {

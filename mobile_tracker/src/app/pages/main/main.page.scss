@@ -18,7 +18,7 @@ ion-avatar{
     gap: 10px;
     height: 120px;
     width: 120px;
-    outline: 2px solid #031D38;
+    border: 1px solid var(--blue-text);
     &h4{
         color: #031D38;    
     }
@@ -67,5 +67,9 @@ a{
 
 .empty-icon {
     font-size: 100px;
+}
 
+img{
+    width: 100%;
+    object-fit: contain;
 }

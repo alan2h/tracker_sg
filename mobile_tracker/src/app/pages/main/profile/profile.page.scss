@@ -2,6 +2,8 @@ ion-avatar {
     width: 140px;
     height: 140px;
     margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid var(--blue-text);
 }
 
 .photo-btn {
@@ -21,4 +23,10 @@ h2 {
 .empty-icon {
     font-size: 140px;
     opacity: 30%;
+}
+
+
+img{
+    width: 100%;
+    object-fit: contain;
 }
