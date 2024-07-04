@@ -19,7 +19,7 @@ export class AccountingService {
     }
 
     getContability(): Observable<any[]> {
-        const url = `${this.baseUrl}/expenses/concepts/`;
+        const url = `${this.baseUrl}/sales/get_detail_finished`;
         return this.http.get<any[]>(url, { headers: this.getHeaders() });
     }
 
