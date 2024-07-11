@@ -30,7 +30,7 @@ export class InitStockPage {
       try {
         await this.initStockService.submitStock(formData).toPromise();
         this.presentToast('bottom', 'Cantidad guardada correctamente', 'toast__success');
-        this.router.navigate(['/main/confirm']);
+        location.replace('/main/confirm');
       } catch (error) {
         console.error('Error al guardar la cantidad:', error);
         this.presentToast('bottom', 'Ha ocurrido un error al guardar la cantidad, inténtelo nuevamente', 'toast__error');
