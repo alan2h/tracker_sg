@@ -4,9 +4,12 @@
 
 export const environment = {
   production: true,
+<<<<<<< HEAD
 
   url_base: 'https://glpgas.ar'
   
+=======
+>>>>>>> 18bde4a (changes)
 };
 
 /*
