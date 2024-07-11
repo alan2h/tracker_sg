@@ -45,7 +45,7 @@ export class ConfirmPage implements OnInit {
             this.presentToast('bottom', 'Para poder continuar, primero debes completar el formulario de inicio de viaje.', 'toast__error');
             setTimeout(() => {
               location.replace('/main/home')
-            }, 3000)
+            }, 1500)
           }
         },
         error: (error) => {

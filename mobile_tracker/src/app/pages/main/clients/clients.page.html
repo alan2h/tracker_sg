@@ -43,9 +43,15 @@
     </ion-item>
 
     <div class="container__button">
-      <ion-button (click)="onToggleInstructions()" class="submit button__date ion-margin-top" expand="block" fill="outline" shape="round">
-        Mostrar Instrucciones
-      </ion-button>
+
+      <div class="error-container">
+        <ion-button (click)="onToggleInstructions()" class="submit button__date ion-margin-top" expand="block" fill="outline" shape="round">
+          Mostrar Instrucciones
+        </ion-button>
+        <ion-button [href]="googleMapsUrl" class="button__date" expand="block" fill="outline" shape="round">
+          Ver en Google Maps
+        </ion-button>
+      </div>
       <ion-button routerLink="/main/sales" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
         Continuar
       </ion-button>
@@ -53,12 +59,6 @@
         Volver
       </ion-button>
     </div>
-  </div>
-
-  <div *ngIf="showErrorButton" class="error-container">
-    <ion-button [href]="googleMapsUrl" expand="block" fill="outline" shape="round">
-      Ver en Google Maps
-    </ion-button>
   </div>
 
   <ion-alert [isOpen]="isAlertOpen" header="No hay entregas disponibles"

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountingService } from './accounting.service';
-import { BillsViewService } from '../bills/bills-view/bills-view.service'; // Importamos el servicio de gastos
+import { BillsViewService } from '../bills/bills-view/bills-view.service';
 import { ToastController } from '@ionic/angular';
 
 interface Product {
@@ -23,6 +23,14 @@ interface Payment {
   load_45: Product[];
 }
 
+interface Expense {
+  description: string;
+  concept: {
+    name: string
+  }
+  amount: number;
+}
+
 @Component({
   selector: 'app-accounting',
   templateUrl: './accounting.page.html',
@@ -30,13 +38,12 @@ interface Payment {
 })
 export class AccountingPage implements OnInit {
   payments: Payment[] = [];
-  expenses: any[] = [];
+  expenses: Expense[] = [];
   exchangeFalseProducts: { [key: string]: { [key: string]: Product[] } } = {};
   exchangeTrueProducts: { [key: string]: Product[] } = {};
   methodPayments: string[] = [];
   totalSales: number = 0;
   totalExpenses: number = 0;
-  netTotal: number = 0;
 
   constructor(private router: Router, private accountingService: AccountingService, private billsViewService: BillsViewService, public toastController: ToastController) {}
 
@@ -44,6 +51,7 @@ export class AccountingPage implements OnInit {
 
   ngOnInit(): void {
     this.loadContabilityData();
+    this.loadExpensesData();
   }
 
   loadContabilityData() {
@@ -52,7 +60,6 @@ export class AccountingPage implements OnInit {
         this.payments = data;
         this.processSalesData();
         this.calculateTotals();
-        this.loadExpensesData(); // Cargamos los gastos después de cargar las ventas
         this.isDataLoaded = true;
       },
       error => {
@@ -64,13 +71,12 @@ export class AccountingPage implements OnInit {
 
   loadExpensesData() {
     this.billsViewService.getBills().subscribe(
-      (data: any[]) => {
+      (data: Expense[]) => {
         this.expenses = data;
         this.calculateTotalExpenses();
-        this.calculateNetTotal();
       },
       error => {
-        this.presentToast("bottom", "No se pudo obtener los gastos, intentalo de nuevo mas tarde.", "toast__error");
+        this.presentToast("bottom", "No se pudo obtener la informacion de gastos, intentalo de nuevo más tarde.", "toast__error");
         console.error('Error loading expenses data', error);
       }
     );
@@ -140,20 +146,22 @@ export class AccountingPage implements OnInit {
   }
 
   calculateTotalExpenses() {
-    this.totalExpenses = this.expenses.reduce((total, expense) => total + expense.amount, 0);
-  }
-
-  calculateNetTotal() {
-    this.netTotal = this.totalSales - this.totalExpenses;
+    this.totalExpenses = this.expenses.reduce((total, expense) => {
+      const expenseAmount = parseFloat(expense.amount.toString());
+      console.log(`Adding expense: ${expenseAmount}`);
+      return total + expenseAmount;
+    }, 0);
   }
 
   getTotalOverallAmount(): number {
     return this.totalSales;
   }
 
-  getNetTotal(): number {
-    return this.netTotal;
-  }
+getNetTotal(): number {
+  console.log(this.totalSales);
+  console.log(this.totalExpenses)
+  return this.totalSales - this.totalExpenses;
+}
 
   navigateBack() {
     this.router.navigate(['/main/clients']);

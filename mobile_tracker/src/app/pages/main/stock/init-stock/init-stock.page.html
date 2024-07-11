@@ -1,0 +1,28 @@
+<app-header [menuShow]="true" title="Venta"></app-header>
+<ion-content class="ion-padding ion-text-center">
+
+  <ion-grid class="title__requisites__container">
+    <ion-row>
+      <p class="input__needed">*Todos los campos son obligatorios.</p>
+    </ion-row>
+  </ion-grid>
+
+  <form [formGroup]="stockForm" (ngSubmit)="submitForm()">
+
+    <ion-item [class.invalid]="isFieldInvalid('quantity')">
+      <ion-label position="stacked">Cantidad:</ion-label>
+      <ion-input formControlName="quantity" type="number" placeholder="Ingrese la cantidad"></ion-input>
+      <ion-text color="danger" *ngIf="isFieldInvalid('quantity') && stockForm.get('quantity')?.dirty">
+        Por favor ingrese una cantidad válida.
+      </ion-text>
+    </ion-item>
+
+    <ion-grid class="submit__button__container">
+      <ion-button type="submit" [disabled]="!stockForm.valid" class="submit ion-margin-top" expand="full" fill="outline" shape="round">
+        Continuar
+      </ion-button>
+    </ion-grid>
+
+  </form>
+
+</ion-content>

@@ -48,6 +48,10 @@ const routes: Routes = [
         path: 'mybills',
         loadChildren: () => import('./bills/bills-view/bills-view.module').then( m => m.BillsViewPageModule)
       },
+      {
+        path: 'init-stock',
+        loadChildren: () => import('../../pages/main/stock/init-stock/init-stock.module').then( m => m.InitStockPageModule)
+      },
     ]
   },
 ];

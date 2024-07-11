@@ -31,6 +31,14 @@
       </ion-item-group>
     </ng-container>
 
+          <!-- Total Productos -->
+          <ion-item-group class="group__container amount__total">
+            <ion-item-divider  class="amount__total__label">
+              <label>Total bruto</label>
+              <label slot="end">{{ getTotalOverallAmount() | currency }}</label>
+            </ion-item-divider>
+          </ion-item-group>
+
     <!-- Sección única para Canjes -->
     <ion-item-group class="group__container">
       <ion-item-divider>
@@ -45,29 +53,31 @@
       </ion-item-group>
     </ion-item-group>
 
-    <!-- Total General -->
-    <ion-item-group class="group__container amount__total">
-      <ion-item-divider class="amount__total__label">
-        <label>Cantidad Total</label>
-        <label slot="end">{{ getTotalOverallAmount() | currency }}</label>
-      </ion-item-divider>
-    </ion-item-group>
+      <!-- Sección única para Gastos -->
+      <ion-item-group class="group__container">
+        <ion-item-divider>
+          <label>Gastos</label>
+        </ion-item-divider>
+  
+        <ion-item-group *ngFor="let expense of expenses">
+          <ion-item>
+            <label class="title__slot" slot="start">{{ expense.concept.name }}</label>
+            <label class="number__slot" slot="end">{{ expense.amount | currency }}</label>
+          </ion-item>
+        </ion-item-group>
+      </ion-item-group>
+  
 
-    <!-- Total de Gastos -->
-    <ion-item-group class="group__container">
-      <ion-item-divider>
-        <label>Total Gastos</label>
-        <label slot="end">{{ totalExpenses | currency }}</label>
-      </ion-item-divider>
-    </ion-item-group>
 
     <!-- Total Neto -->
-    <ion-item-group class="group__container">
-      <ion-item-divider>
-        <label>Total Neto</label>
+    <ion-item-group class="group__container amount__total">
+      <ion-item-divider class="amount__total__label">
+        <label>Total neto</label>
         <label slot="end">{{ getNetTotal() | currency }}</label>
       </ion-item-divider>
     </ion-item-group>
+
+
   </ion-list>
 </ion-content>
 

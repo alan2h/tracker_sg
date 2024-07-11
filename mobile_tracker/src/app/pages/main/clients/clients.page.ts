@@ -23,7 +23,6 @@ export class ClientsPage implements OnInit, OnDestroy {
   ciudadCliente: string = '';
   isAlertOpen: boolean = false;
   isLoading: boolean = true;
-  showErrorButton: boolean = false;
   googleMapsUrl: string = '';
   alertButtons = [
     {
@@ -81,7 +80,6 @@ export class ClientsPage implements OnInit, OnDestroy {
     }, error => {
       console.error('Error fetching client data', error);
       this.isLoading = false;
-      this.showErrorButton = true;
     });
   }
 
@@ -113,7 +111,6 @@ export class ClientsPage implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Error obteniendo ubicación', error);
       this.isLoading = false;
-      this.showErrorButton = true;
     }
   }
 

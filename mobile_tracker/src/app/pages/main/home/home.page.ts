@@ -199,7 +199,7 @@ export class HomePage implements OnInit {
       };
       this.presentToast("bottom", "El cuestionario ha sido guardado, redirigiendo a un cliente.", "toast__success");
       localStorage.setItem('RequisitesInitTravel', JSON.stringify(RequisitesInitTravel));
-      this.router.navigate(['/main/confirm']);
+      this.router.navigate(['/main/init-stock']);
     } catch (error) {
       this.presentToast("bottom", "Ha ocurrido un error al responder el cuestionario, intentelo de nuevo mas tarde.", "toast__error");
       console.error('Error al enviar respuestas:', error);
