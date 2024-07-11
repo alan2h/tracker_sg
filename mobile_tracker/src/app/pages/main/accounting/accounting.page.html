@@ -52,6 +52,22 @@
         <label slot="end">{{ getTotalOverallAmount() | currency }}</label>
       </ion-item-divider>
     </ion-item-group>
+
+    <!-- Total de Gastos -->
+    <ion-item-group class="group__container">
+      <ion-item-divider>
+        <label>Total Gastos</label>
+        <label slot="end">{{ totalExpenses | currency }}</label>
+      </ion-item-divider>
+    </ion-item-group>
+
+    <!-- Total Neto -->
+    <ion-item-group class="group__container">
+      <ion-item-divider>
+        <label>Total Neto</label>
+        <label slot="end">{{ getNetTotal() | currency }}</label>
+      </ion-item-divider>
+    </ion-item-group>
   </ion-list>
 </ion-content>
 

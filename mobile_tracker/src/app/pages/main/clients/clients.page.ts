@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { Geolocation } from '@capacitor/geolocation';
@@ -22,6 +22,9 @@ export class ClientsPage implements OnInit, OnDestroy {
   barrioCliente: string = '';
   ciudadCliente: string = '';
   isAlertOpen: boolean = false;
+  isLoading: boolean = true;
+  showErrorButton: boolean = false;
+  googleMapsUrl: string = '';
   alertButtons = [
     {
       text: 'OK',
@@ -37,7 +40,6 @@ export class ClientsPage implements OnInit, OnDestroy {
   async ngOnInit() {
     await this.checkPermissions();
     this.fetchClientData();
-    this.initMap();
   }
 
   ngOnDestroy() {
@@ -61,27 +63,32 @@ export class ClientsPage implements OnInit, OnDestroy {
 
   private fetchClientData() {
     this.clientService.getClientData().subscribe(data => {
-      if(!data.name) {
+      if (!data.name) {
         this.isAlertOpen = true;
-      } else{
+        this.isLoading = false;
+      } else {
         console.log(data);
         this.nombreCliente = data.name;
-          this.direccionCliente = data.neighborhood.name;
-          this.observacionCliente = data.neighborhood.description || '-';
-          this.telefonoCliente = data.phone || '-';
-          this.barrioCliente = data.neighborhood.name;
-          this.ciudadCliente = data.neighborhood.city.name;
+        this.direccionCliente = data.neighborhood.name;
+        this.observacionCliente = data.neighborhood.description || '-';
+        this.telefonoCliente = data.phone || '-';
+        this.barrioCliente = data.neighborhood.name;
+        this.ciudadCliente = data.neighborhood.city.name;
         localStorage.setItem('customer_id', data.id);
-        this.updateMap(data.latitude, data.longitude);
+        this.googleMapsUrl = `https://www.google.com/maps?q=${data.latitude},${data.longitude}`;
+        this.initMap(data.latitude, data.longitude);
       }
     }, error => {
       console.error('Error fetching client data', error);
+      this.isLoading = false;
+      this.showErrorButton = true;
     });
   }
 
-  private async initMap(): Promise<void> {
+  private async initMap(clientLat: number, clientLng: number): Promise<void> {
     this.map = L.map('map', {
-      center: [-26.1775300, -58.1781400],
+      center: [clientLat, clientLng],
+      zoom: 13
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -99,20 +106,19 @@ export class ClientsPage implements OnInit, OnDestroy {
         popupAnchor: [0, 10],
       });
 
-      if (this.myLocationMarker) {
-        this.map.removeLayer(this.myLocationMarker);
-      }
-
       this.myLocationMarker = L.marker(myLocation, { icon: myLocationIcon }).addTo(this.map).bindPopup('Mi Ubicación').openPopup();
+      this.updateMap(clientLat, clientLng);
 
       this.toggleInstructions(false);
     } catch (error) {
       console.error('Error obteniendo ubicación', error);
+      this.isLoading = false;
+      this.showErrorButton = true;
     }
   }
 
-  private updateMap(lat: string, lng: string) {
-    const fixedPoint: L.LatLngExpression = [parseFloat(lat), parseFloat(lng)];
+  private updateMap(lat: number, lng: number) {
+    const fixedPoint: L.LatLngExpression = [lat, lng];
     const fixedPointIcon = L.icon({
       iconUrl: 'assets/icon/map/flag.svg',
       iconSize: [16, 16],
@@ -120,11 +126,7 @@ export class ClientsPage implements OnInit, OnDestroy {
       popupAnchor: [0, 10],
     });
 
-    if (this.fixedPointMarker) {
-      this.map.removeLayer(this.fixedPointMarker);
-    }
-
-    this.fixedPointMarker = L.marker(fixedPoint, { icon: fixedPointIcon }).addTo(this.map).bindPopup('Punto Fijo').openPopup();
+    this.fixedPointMarker = L.marker(fixedPoint, { icon: fixedPointIcon }).addTo(this.map).bindPopup('Entrega').openPopup();
 
     if (this.routingControl) {
       this.map.removeControl(this.routingControl);
@@ -139,7 +141,7 @@ export class ClientsPage implements OnInit, OnDestroy {
       language: 'es',
       createMarker: () => { return null; },
       lineOptions: {
-        styles: [{ color: 'blue', opacity: 1, weight: 5 }]
+        styles: [{ color: 'blue', opacity: 1, weight: 2 }]
       },
       addWaypoints: false,
       draggableWaypoints: false,
@@ -149,6 +151,8 @@ export class ClientsPage implements OnInit, OnDestroy {
       collapsible: true,
       autoRoute: true
     }).addTo(this.map);
+
+    this.isLoading = false;
   }
 
   toggleInstructions(visible: boolean) {

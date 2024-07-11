@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountingService } from './accounting.service';
+import { BillsViewService } from '../bills/bills-view/bills-view.service'; // Importamos el servicio de gastos
 import { ToastController } from '@ionic/angular';
+
 interface Product {
   product: string;
   quantity: number;
@@ -28,12 +30,15 @@ interface Payment {
 })
 export class AccountingPage implements OnInit {
   payments: Payment[] = [];
+  expenses: any[] = [];
   exchangeFalseProducts: { [key: string]: { [key: string]: Product[] } } = {};
   exchangeTrueProducts: { [key: string]: Product[] } = {};
   methodPayments: string[] = [];
   totalSales: number = 0;
+  totalExpenses: number = 0;
+  netTotal: number = 0;
 
-  constructor(private router: Router, private accountingService: AccountingService, public toastController: ToastController) {}
+  constructor(private router: Router, private accountingService: AccountingService, private billsViewService: BillsViewService, public toastController: ToastController) {}
 
   isDataLoaded: boolean = false;
 
@@ -47,11 +52,26 @@ export class AccountingPage implements OnInit {
         this.payments = data;
         this.processSalesData();
         this.calculateTotals();
+        this.loadExpensesData(); // Cargamos los gastos después de cargar las ventas
         this.isDataLoaded = true;
       },
       error => {
         this.presentToast("bottom", "No se pudo obtener la informacion necesaria, intentalo de nuevo mas tarde.", "toast__error");
         console.error('Error loading contability data', error);
+      }
+    );
+  }
+
+  loadExpensesData() {
+    this.billsViewService.getBills().subscribe(
+      (data: any[]) => {
+        this.expenses = data;
+        this.calculateTotalExpenses();
+        this.calculateNetTotal();
+      },
+      error => {
+        this.presentToast("bottom", "No se pudo obtener los gastos, intentalo de nuevo mas tarde.", "toast__error");
+        console.error('Error loading expenses data', error);
       }
     );
   }
@@ -119,8 +139,20 @@ export class AccountingPage implements OnInit {
     }, 0);
   }
 
+  calculateTotalExpenses() {
+    this.totalExpenses = this.expenses.reduce((total, expense) => total + expense.amount, 0);
+  }
+
+  calculateNetTotal() {
+    this.netTotal = this.totalSales - this.totalExpenses;
+  }
+
   getTotalOverallAmount(): number {
     return this.totalSales;
+  }
+
+  getNetTotal(): number {
+    return this.netTotal;
   }
 
   navigateBack() {
@@ -143,7 +175,6 @@ export class AccountingPage implements OnInit {
     return products.reduce((total, product) => total + product.total, 0);
   }
 
-  
   async presentToast(position: 'top' | 'middle' | 'bottom', message: string, cssClass: string) {
     const toast = await this.toastController.create({
       message: message,

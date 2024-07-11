@@ -1,56 +1,67 @@
 <app-header [menuShow]="true" title="{{ nombreCliente }}"></app-header>
 <ion-content class="ion-padding ion-text-center">
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando ubicación...</p>
+  </div>
   <div id="map" style="height: 50%;"></div>
 
-  <ion-grid>
-    <ion-row>
-      <h4>Datos del cliente</h4>
-    </ion-row>
-  </ion-grid>
-
-  <ion-item >
-    <ion-grid class="customer__container">
+  <div *ngIf="!isLoading">
+    <ion-grid>
       <ion-row>
-        <ion-col>Nombre:</ion-col>
-        <ion-col>{{ nombreCliente }}</ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>Ciudad:</ion-col>
-        <ion-col>{{ ciudadCliente }}</ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>Barrio:</ion-col>
-        <ion-col>{{ barrioCliente }}</ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>Dirección:</ion-col>
-        <ion-col>{{ observacionCliente }}</ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>Teléfono:</ion-col>
-        <ion-col>{{ telefonoCliente }}</ion-col>
+        <h4>Datos del cliente</h4>
       </ion-row>
     </ion-grid>
-  </ion-item>
 
-  <div class="container__button">
-    <ion-button (click)="onToggleInstructions()" class="submit button__date ion-margin-top" expand="block" fill="outline" shape="round">
-      Mostrar Instrucciones
-    </ion-button>
-    <ion-button routerLink="/main/sales" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
-      Continuar
-    </ion-button>
-    <ion-button routerLink="/main/confirm" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
-      Volver
-    </ion-button>
+    <ion-item>
+      <ion-grid class="customer__container">
+        <ion-row>
+          <ion-col>Nombre:</ion-col>
+          <ion-col>{{ nombreCliente }}</ion-col>
+        </ion-row>
 
+        <ion-row>
+          <ion-col>Ciudad:</ion-col>
+          <ion-col>{{ ciudadCliente }}</ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>Barrio:</ion-col>
+          <ion-col>{{ barrioCliente }}</ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>Dirección:</ion-col>
+          <ion-col>{{ observacionCliente }}</ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>Teléfono:</ion-col>
+          <ion-col>{{ telefonoCliente }}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <div class="container__button">
+      <ion-button (click)="onToggleInstructions()" class="submit button__date ion-margin-top" expand="block" fill="outline" shape="round">
+        Mostrar Instrucciones
+      </ion-button>
+      <ion-button routerLink="/main/sales" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
+        Continuar
+      </ion-button>
+      <ion-button routerLink="/main/confirm" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
+        Volver
+      </ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="showErrorButton" class="error-container">
+    <ion-button [href]="googleMapsUrl" expand="block" fill="outline" shape="round">
+      Ver en Google Maps
+    </ion-button>
   </div>
 
   <ion-alert [isOpen]="isAlertOpen" header="No hay entregas disponibles"
-message="Actualmente no hay entregas pendientes, intentelo de nuevo mas tarde" [buttons]="alertButtons"
-(didDismiss)="setOpen(false)"></ion-alert>
+    message="Actualmente no hay entregas pendientes, intentelo de nuevo mas tarde" [buttons]="alertButtons"
+    (didDismiss)="setOpen(false)"></ion-alert>
 </ion-content>

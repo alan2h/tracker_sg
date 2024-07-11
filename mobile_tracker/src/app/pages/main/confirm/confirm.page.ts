@@ -102,7 +102,7 @@ export class ConfirmPage implements OnInit {
       observacion: this.observacionCliente,
       telefono: this.telefonoCliente
     };
-    console.log("54" + this.telefonoCliente);
+    console.log("54" + "3704859879");
     let data = {
       "messaging_product": "whatsapp",
       "to": "543781482464",
@@ -128,6 +128,10 @@ export class ConfirmPage implements OnInit {
           }, 2500)
         },
         error => {
+          this.presentToast('bottom', 'No se ha podido enviar el mensaje al cliente.', 'toast__error');
+          setTimeout( () =>{
+            location.replace('/main/clients');
+          }, 2500)
           console.error('Error al enviar el mensaje:', error);
         }
       );
