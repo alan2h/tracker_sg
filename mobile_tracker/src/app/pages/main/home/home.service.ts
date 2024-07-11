@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
-  private questionsUrl = 'https://glpgas.ar/api/questions';
-  private answersUrl = 'https://glpgas.ar/api/answers/';
+  private questionsUrl = `${environment.url_base}/api/questions`;
+  private answersUrl = `${environment.url_base}/api/answers/`;
 
   constructor(private http: HttpClient) {}
 

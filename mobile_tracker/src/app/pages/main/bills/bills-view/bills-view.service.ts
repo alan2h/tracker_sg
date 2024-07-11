@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +9,6 @@ import { Observable } from "rxjs";
 
 export class BillsViewService {
 
-    private baseUrl = 'https://glpgas.ar/api';
     private token: string | null = sessionStorage.getItem('token');
 
     constructor(private http: HttpClient) { }
@@ -21,7 +21,7 @@ export class BillsViewService {
     }
 
     getBills(): Observable<any[]> {
-        const url = `${this.baseUrl}/expenses/`;
+        const url = `${environment.url_base}/api/expenses/`;
 
         return this.http.get<any[]>(url, { headers: this.getHeaders() });
     }

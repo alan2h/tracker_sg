@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AccountingService {
-    private baseUrl = 'https://glpgas.ar/api';
     private token: string | null = sessionStorage.getItem('token');
 
     constructor(private http: HttpClient) { }
@@ -19,7 +19,7 @@ export class AccountingService {
     }
 
     getContability(): Observable<any[]> {
-        const url = `${this.baseUrl}/sales/get_detail_finished`;
+        const url = `${environment.url_base}/api/sales/get_detail_finished`;
         return this.http.get<any[]>(url, { headers: this.getHeaders() });
     }
 

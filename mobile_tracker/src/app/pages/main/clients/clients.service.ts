@@ -2,13 +2,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
 
-  private apiUrl = 'https://glpgas.ar/api/pos/';
+  private apiUrl = `${environment.url_base}/api/pos/`;
 
   constructor(private http: HttpClient) { }
 

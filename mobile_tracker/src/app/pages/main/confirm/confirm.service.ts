@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  private apiUrlUser = 'https://glpgas.ar/api/users/me';
-  private apiUrlPos = 'https://glpgas.ar/api/pos/';
+  private apiUrlUser = `${environment.url_base}/api/users/me`;
+  private apiUrlPos = `${environment.url_base}/api/pos/`;
   private apiWhatsappUrl = 'https://graph.facebook.com/v19.0/356480757551822/messages';
 
   constructor(private http: HttpClient) { }
