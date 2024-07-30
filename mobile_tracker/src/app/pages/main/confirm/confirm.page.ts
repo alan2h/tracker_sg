@@ -81,12 +81,12 @@ export class ConfirmPage implements OnInit {
           this.isAlertOpen = true;
         } else {
           const firstCustomer = customerData;
-          this.nombreCliente = firstCustomer.name;
-          this.direccionCliente = firstCustomer.neighborhood.name;
+          this.nombreCliente = firstCustomer.name  || '-';
+          this.direccionCliente = firstCustomer.neighborhood.name  || '-';
           this.observacionCliente = firstCustomer.neighborhood.description || '-';
           this.telefonoCliente = firstCustomer.phone || '-';
-          this.barrioCliente = firstCustomer.neighborhood.name;
-          this.ciudadCliente = firstCustomer.neighborhood.city.name;
+          this.barrioCliente = firstCustomer.neighborhood.name  || '-';
+          this.ciudadCliente = firstCustomer.neighborhood.city.name  || '-';
         }
         resolve();
       }, error => {
@@ -102,7 +102,6 @@ export class ConfirmPage implements OnInit {
       observacion: this.observacionCliente,
       telefono: this.telefonoCliente
     };
-    console.log("54" + "3704859879");
     let data = {
       "messaging_product": "whatsapp",
       "to": "543781482464",

@@ -67,12 +67,12 @@ export class ClientsPage implements OnInit, OnDestroy {
         this.isLoading = false;
       } else {
         console.log(data);
-        this.nombreCliente = data.name;
-        this.direccionCliente = data.neighborhood.name;
+        this.nombreCliente = data.name || '-';
+        this.direccionCliente = data.neighborhood.name || '-';
         this.observacionCliente = data.neighborhood.description || '-';
         this.telefonoCliente = data.phone || '-';
-        this.barrioCliente = data.neighborhood.name;
-        this.ciudadCliente = data.neighborhood.city.name;
+        this.barrioCliente = data.neighborhood.name || '-';
+        this.ciudadCliente = data.neighborhood.city.name || '-';
         localStorage.setItem('customer_id', data.id);
         this.googleMapsUrl = `https://www.google.com/maps?q=${data.latitude},${data.longitude}`;
         this.initMap(data.latitude, data.longitude);
@@ -94,8 +94,13 @@ export class ClientsPage implements OnInit, OnDestroy {
     }).addTo(this.map);
 
     try {
-      const position = (await Geolocation.getCurrentPosition()).coords;
-      const myLocation: L.LatLngExpression = [position.latitude, position.longitude];
+      const position = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      });
+
+      const myLocation: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
 
       const myLocationIcon = L.icon({
         iconUrl: 'assets/icon/map/gas1.svg',
@@ -125,31 +130,40 @@ export class ClientsPage implements OnInit, OnDestroy {
 
     this.fixedPointMarker = L.marker(fixedPoint, { icon: fixedPointIcon }).addTo(this.map).bindPopup('Entrega').openPopup();
 
-    if (this.routingControl) {
-      this.map.removeControl(this.routingControl);
+    const myLocationCoords = this.myLocationMarker.getLatLng();
+    const fixedPointCoords = this.fixedPointMarker.getLatLng();
+
+    if (myLocationCoords && fixedPointCoords) {
+      if (this.routingControl) {
+        this.map.removeControl(this.routingControl);
+      }
+
+      this.routingControl = (L as any).Routing.control({
+        waypoints: [
+          myLocationCoords,
+          fixedPointCoords
+        ],
+        routeWhileDragging: true,
+        language: 'es',
+        createMarker: () => { return null; },
+        lineOptions: {
+          styles: [{ color: 'blue', opacity: 1, weight: 2 }]
+        },
+        addWaypoints: false,
+        draggableWaypoints: false,
+        fitSelectedRoutes: true,
+        showAlternatives: true,
+        summaryTemplate: '<div></div>',
+        collapsible: true,
+        autoRoute: true
+      }).on('routingerror', () => {
+        console.error('Routing error:');
+      }).addTo(this.map);
+
+      this.isLoading = false;
+    } else {
+      console.error('Invalid coordinates for routing');
     }
-
-    this.routingControl = (L as any).Routing.control({
-      waypoints: [
-        this.myLocationMarker.getLatLng(),
-        fixedPoint
-      ],
-      routeWhileDragging: true,
-      language: 'es',
-      createMarker: () => { return null; },
-      lineOptions: {
-        styles: [{ color: 'blue', opacity: 1, weight: 2 }]
-      },
-      addWaypoints: false,
-      draggableWaypoints: false,
-      fitSelectedRoutes: true,
-      showAlternatives: false,
-      summaryTemplate: '<div></div>',
-      collapsible: true,
-      autoRoute: true
-    }).addTo(this.map);
-
-    this.isLoading = false;
   }
 
   toggleInstructions(visible: boolean) {
