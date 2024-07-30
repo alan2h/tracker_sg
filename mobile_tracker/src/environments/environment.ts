@@ -1,12 +1,7 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
 
 export const environment = {
   production: true,
-
-  url_base: 'https://glpgas.ar'
-  
+  url_base: 'http://0.0.0.0:8001'
 };
 
 /*
