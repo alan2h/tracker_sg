@@ -6,6 +6,10 @@
     margin: 0;
 }
 
+.remaining{
+    color: var(--yellow-0);
+}
+
 .title__requisites__container{
     padding: 10px;
     text-align: left;
@@ -67,4 +71,10 @@
     justify-content: space-between;
     width: 100%;
     align-items: center;
+}
+
+.buttons_submit{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

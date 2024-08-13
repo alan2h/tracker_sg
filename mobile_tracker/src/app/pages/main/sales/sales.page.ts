@@ -12,6 +12,9 @@ export class SalesPage implements OnInit {
   products: any[] = [];
   datosCliente: any;
   salesForm!: FormGroup;
+  totalPrice: number = 0;
+  remainingAmount: number = 0;
+  isWrongForm = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +25,29 @@ export class SalesPage implements OnInit {
     if (datosClienteString) {
       this.datosCliente = JSON.parse(datosClienteString);
     }
+  }
+
+  ngOnInit() {
+    this.getProducts();
+    this.salesForm = this.formBuilder.group({
+      cliente: this.formBuilder.group({
+        nombre: [this.datosCliente.nombre],
+        telefono: [this.datosCliente.telefono],
+        direccion: [this.datosCliente.direccion],
+        observacion: [this.datosCliente.observacion],
+      }),
+      sales: this.formBuilder.array([]),
+      payments: this.formBuilder.array([]),
+      observations: [''],
+    });
+  }
+
+  get sales() {
+    return this.salesForm.get('sales') as FormArray;
+  }
+
+  get payments() {
+    return this.salesForm.get('payments') as FormArray;
   }
 
   addElemento() {
@@ -35,30 +61,65 @@ export class SalesPage implements OnInit {
     this.sales.push(newSale);
   }
 
-  ngOnInit() {
-    this.getProducts();
-    this.salesForm = this.formBuilder.group({
-      cliente: this.formBuilder.group({
-        nombre: [this.datosCliente.nombre],
-        telefono: [this.datosCliente.telefono],
-        direccion: [this.datosCliente.direccion],
-        observacion: [this.datosCliente.observacion],
-      }),
-      sales: this.formBuilder.array([]),
-      paymentMethod: ['', Validators.required], // Validador de campo requerido
-      observations: [''],
+  addPayment() {
+    const newPayment = this.formBuilder.group({
+      method: ['', Validators.required],
+      amount: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]+(.[0-9]{1,2})?$')],
+      ],
     });
-  }
-
-  get sales() {
-    return this.salesForm.get('sales') as FormArray;
+    this.payments.push(newPayment);
   }
 
   removeElemento(index: number) {
     this.sales.removeAt(index);
+    this.calculateTotalPrice();
+    this.calculateRemainingAmount();
+  }
+
+  removePayment(index: number) {
+    this.payments.removeAt(index);
+    this.calculateRemainingAmount();
+  }
+
+  onProductChange(event: any, i: number) {
+    const productId = event.detail.value;
+    const selectedProduct = this.products.find((p) => p.id === productId);
+    if (selectedProduct) {
+      this.sales.controls[i].patchValue({
+        price: selectedProduct.price,
+        label: selectedProduct.description,
+      });
+    }
+  }
+
+  calculateTotalPrice() {
+    this.totalPrice = this.sales.controls
+      .filter((control) => control.get('exchange')?.value === false)
+      .reduce((acc, control) => {
+        const quantity = control.get('quantity')?.value;
+        const price = control.get('price')?.value;
+        return acc + quantity * price;
+      }, 0);
+    this.calculateRemainingAmount();
+  }
+
+  calculateRemainingAmount() {
+    const totalPaid = this.payments.controls.reduce((acc, control) => {
+      const amount = control.get('amount')?.value;
+      return acc + amount;
+    }, 0);
+    this.remainingAmount = this.totalPrice - totalPaid;
   }
 
   onSubmit() {
+    if (this.salesForm.invalid || this.remainingAmount !== 0) {
+      console.log('El formulario no es válido o aún queda un monto restante.');
+      this.isWrongForm = true;
+      return;
+    }
+
     if (this.salesForm.valid) {
       const listProducts = this.salesForm.value.sales.map((sale: any) => ({ ...sale }));
       const detailSale = this.salesForm.value.sales.map((sale: any) => ({
@@ -71,45 +132,23 @@ export class SalesPage implements OnInit {
       localStorage.setItem('salesFormData', JSON.stringify(this.salesForm.value));
       localStorage.setItem('detail_sale', JSON.stringify(detailSale));
 
+      this.isWrongForm = false;
       this.router.navigate(['/main/detail_sale']);
-    } else {
-      this.markFormGroupTouched(this.salesForm);
     }
-  }
-
-  markFormGroupTouched(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach(control => {
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control);
-      } else {
-        control.markAsTouched();
-      }
-    });
   }
 
   navigateBack() {
-    this.router.navigate(['/main/clients']);
+    this.router.navigate(['/']);
   }
 
-  private getProducts() {
+  getProducts() {
     this.salesService.getProducts().subscribe(
-      (response) => {
-        this.products = response;
+      (products) => {
+        this.products = products;
       },
       (error) => {
-        console.error('Error fetching products', error);
+        console.log('Error al obtener productos', error);
       }
     );
-  }
-
-  onProductChange(event: any, index: number) {
-    const selectedProductId = event.detail.value;
-    const selectedProduct = this.products.find(product => product.id === selectedProductId);
-    if (selectedProduct) {
-      this.sales.at(index).patchValue({
-        price: selectedProduct.price,
-        label: selectedProduct.description
-      });
-    }
   }
 }

@@ -1,6 +1,7 @@
 <app-header [menuShow]="true" title="Venta"></app-header>
 <ion-content class="ion-padding ion-text-center">
   <form [formGroup]="salesForm" (ngSubmit)="onSubmit()">
+    <!-- Datos del cliente -->
     <ion-list>
       <ion-item>
         <ion-avatar slot="start">
@@ -11,7 +12,7 @@
             <h4>{{ datosCliente.nombre }}</h4>
           </ion-row>
           <ion-row>
-            <ion-col><strong>Telefono: </strong></ion-col>
+            <ion-col><strong>Teléfono: </strong></ion-col>
             <ion-col>{{ datosCliente.telefono }}</ion-col>
           </ion-row>
           <ion-row>
@@ -19,14 +20,13 @@
             <ion-col>{{ datosCliente.direccion }}</ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><strong>Direccion: </strong></ion-col>
+            <ion-col><strong>Dirección: </strong></ion-col>
             <ion-col>{{ datosCliente.observacion }}</ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
 
-
-
+      <!-- Información de ventas -->
       <ion-grid class="title__requisites__container">
         <ion-row>
           <h4>Ventas</h4>
@@ -38,10 +38,10 @@
         </ion-row>
       </ion-grid>
 
-
       <div class="sales__form__container">
         <div formArrayName="sales">
           <ion-grid *ngFor="let sale of sales.controls; let i = index" [formGroupName]="i" class="input__container">
+            <!-- Selección de productos -->
             <ion-row>
               <ion-col class="product__select__container">
                 <ion-label>Listado de productos:</ion-label>
@@ -53,33 +53,33 @@
                 <ion-text color="danger">Debes seleccionar un producto para poder continuar.</ion-text>
               </div>
             </ion-row>
+            <!-- Cantidad -->
             <ion-row class="quantity__row__container">
               <ion-label>Cantidad:</ion-label>
               <ion-col class="quantity__container">
-                <ion-input placeholder="Ingrese la cantidad" formControlName="quantity" type="number"></ion-input>
+                <ion-input placeholder="Ingrese la cantidad" formControlName="quantity" type="number" (ionChange)="calculateTotalPrice()"></ion-input>
               </ion-col>
               <div *ngIf="sales.controls[i]?.get('quantity')?.invalid && sales.controls[i]?.get('quantity')?.touched">
                 <ion-text color="danger">La cantidad es requerida y debe ser un número.</ion-text>
               </div>
             </ion-row>
+            <!-- PRICE Y DESCRIPTION -->
             <ion-row>
-              <!-- PRICE Y DESCRIPTION -->
               <ion-col>
-                  <input formControlName="price" type="number" hidden/>
+                <input formControlName="price" type="number" hidden />
               </ion-col>
               <ion-col>
-                  <input formControlName="label" type="text" hidden/>
+                <input formControlName="label" type="text" hidden />
               </ion-col>
-              <!-- PRICE Y DESCRIPTION -->
-
             </ion-row>
+            <!-- Checkbox de exchange -->
             <ion-item>
               <ion-row class="buttons__container">
                 <ion-col class="icon__container__remove">
                   <ion-button (click)="removeElemento(i)" shape="round" color="danger" fill="outline">Eliminar</ion-button>
                 </ion-col>
                 <ion-col class="change__container">
-                  <ion-checkbox class="justify-center" formControlName="exchange">Es canje?</ion-checkbox>
+                  <ion-checkbox class="justify-center" formControlName="exchange" (ionChange)="calculateTotalPrice()">Es canje?</ion-checkbox>
                 </ion-col>
               </ion-row>
             </ion-item>
@@ -89,47 +89,68 @@
 
       <ion-button class="button__outline__blue" expand="block" fill="outline" shape="round" (click)="addElemento()">
         <ion-icon name="add-circle-outline"></ion-icon>
-        Agregar Venta
+        Agregar otro producto
       </ion-button>
 
-      <div  class="payment__container">
-        <ion-item>
-          <ion-grid >
-            <ion-row>
-              <ion-label class="input__label">Seleccione metodo de pago</ion-label>
-            </ion-row>
+      <!-- Información de pagos -->
+      <ion-grid class="title__requisites__container">
+        <ion-row>
+          <h4>Métodos de Pago</h4>
+        </ion-row>
+      </ion-grid>
+      <div class="payments__form__container">
+        <div formArrayName="payments">
+          <ion-grid *ngFor="let payment of payments.controls; let i = index" [formGroupName]="i" class="input__container">
             <ion-row>
               <ion-col>
-                <ion-select placeholder="Metodo de pago" formControlName="paymentMethod">
+                <ion-label>Método de pago:</ion-label>
+                <ion-select placeholder="Seleccione un método" formControlName="method">
                   <ion-select-option value="EFECTIVO">Efectivo</ion-select-option>
-                  <ion-select-option value="DEBITO">Tarjeta de débito</ion-select-option>
+                  <ion-select-option value="CREDITO">Tarjeta de Crédito</ion-select-option>
+                  <ion-select-option value="DEBITO">Tarjeta de Débito</ion-select-option>
                   <ion-select-option value="MERCADOPAGO">Mercado Pago</ion-select-option>
                   <ion-select-option value="OTROS">Otros</ion-select-option>
                 </ion-select>
               </ion-col>
-              <div *ngIf="!salesForm.controls['paymentMethod'].valid && salesForm.controls['paymentMethod'].touched">
-                <ion-text color="danger">Debe seleccionar un método de pago.</ion-text>
-              </div>
+              <ion-col>
+                <ion-label>Monto:</ion-label>
+                <ion-input placeholder="Monto a pagar" formControlName="amount" type="number" (ionChange)="calculateRemainingAmount()"></ion-input>
+                <div *ngIf="payments.controls[i]?.get('amount')?.invalid && payments.controls[i]?.get('amount')?.touched">
+                  <ion-text color="danger">El monto debe ser un valor positivo y no exceder el total.</ion-text>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="icon__container__remove">
+                <ion-button (click)="removePayment(i)" shape="round" color="danger" fill="outline">Eliminar</ion-button>
+              </ion-col>
             </ion-row>
           </ion-grid>
-        </ion-item>
-
-  
-        <ion-item>
-          <ion-label position="stacked">Observaciones</ion-label>
-          <ion-textarea formControlName="observations" placeholder="Ingrese una observación"></ion-textarea>
-        </ion-item>
+        </div>
       </div>
+      <ion-button class="button__outline__blue" expand="block" fill="outline" shape="round" (click)="addPayment()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        Agregar otro método de pago
+      </ion-button>
     </ion-list>
 
-    <div class="container__button">
-      <ion-button type="submit" class="submit ion-margin-top" expand="block" fill="outline" shape="round" [disabled]="!salesForm.valid || sales.length < 1">
-        Continuar
-      </ion-button>
-      <ion-button (click)="navigateBack()" class="submit button-red ion-margin-top" expand="block" fill="outline"
-        shape="round">
-        Volver
-      </ion-button>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="total__container">
+          <h3>Total a Pagar: {{ totalPrice | currency }}</h3>
+          <p class="remaining">Restante a asignar: {{ remainingAmount | currency }}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div *ngIf="isWrongForm">
+      <ion-text color="danger">Falta rellenar el formulario, y asignar todo el monto a los metodos de pago</ion-text>
     </div>
+
+    <div class="buttons_submit">
+      <ion-button class="button__blue" type="submit" expand="block" shape="round">Continuar</ion-button>
+      <ion-button class="button__outline__blue" expand="block" fill="outline" shape="round" (click)="navigateBack()">Cancelar</ion-button>
+    </div>
+
   </form>
 </ion-content>

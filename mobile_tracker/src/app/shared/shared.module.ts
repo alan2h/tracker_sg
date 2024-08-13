@@ -7,6 +7,8 @@ import { LogoComponent } from './components/logo/logo.component';
 import { UpdateEmployeeComponent } from './components/update-employee/update-employee.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { QRCodeModule } from 'angularx-qrcode';
+
 
 
 @NgModule({
@@ -23,7 +25,8 @@ import { IonicModule } from '@ionic/angular';
     UpdateEmployeeComponent,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule
+    IonicModule,
+    QRCodeModule 
   ],
   providers: [],
   imports: [

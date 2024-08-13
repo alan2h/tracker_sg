@@ -26,3 +26,9 @@ ion-list{
     background: var(--blue-text);
     color: var(--white-text);
 }
+
+.qr__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
