@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     HttpClientModule, // Asegúrate de agregar HttpClientModule aquí
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 
 export const environment = {
   production: true,
-  url_base: 'http://0.0.0.0:8001'
+  url_base: 'https://glpgas.ar'
 };
 
 /*

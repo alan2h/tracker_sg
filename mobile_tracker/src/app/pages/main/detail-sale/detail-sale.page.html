@@ -1,16 +1,24 @@
 <app-header [menuShow]="true" title="Detalles de la venta"></app-header>
 
 <ion-content class="ion-padding">
-
-
   <div class="cancel__message" *ngIf="totalNonExchangeSales === 0 && exchangeSales.length < 1">
     <p>Si confirma, cancelara la venta.</p>
   </div>
 
   <div *ngIf="!errorMessage">
     <ion-list>
+      <!-- Mostrar métodos de pago -->
+      <div *ngIf="paymentMethods.length">
+        <h2>Métodos de Pago</h2>
+        <ion-item *ngFor="let payment of paymentMethods">
+          <ion-label>
+            <h3>{{ getPaymentMethodLabel(payment.method) }}</h3>
+            <p>Monto: {{ payment.amount | currency }}</p>
+          </ion-label>
+        </ion-item>
+      </div>
 
-      <div  *ngIf="nonExchangeSales.length">
+      <div *ngIf="nonExchangeSales.length">
         <h2>Ventas</h2>
       </div>
       <ion-item *ngFor="let sale of nonExchangeSales">
@@ -21,7 +29,7 @@
         </ion-label>
       </ion-item>
 
-      <div  *ngIf="exchangeSales.length">
+      <div *ngIf="exchangeSales.length">
         <h2>Canjes</h2>
       </div>
       <ion-item *ngFor="let sale of exchangeSales">
@@ -34,13 +42,14 @@
 
       <ion-item-group class="group__container amount__total">
         <ion-item-divider class="amount__total__label">
-          <label >Cantidad Total: </label>
+          <label>Cantidad Total: </label>
           <label slot="end">${{ totalNonExchangeSales }}</label>
         </ion-item-divider>
       </ion-item-group>
     </ion-list>
   </div>
 
+  <!-- Botones -->
   <div class="container__button">
     <ion-button (click)="submit()" class="submit ion-margin-top" expand="block" fill="outline" shape="round">
       Confirmar venta y continuar
@@ -48,5 +57,18 @@
     <ion-button (click)="navigateBack()" class="submit button-red ion-margin-top" expand="block" fill="outline" shape="round">
       Volver
     </ion-button>
+    <ion-button 
+    *ngIf="shouldShowGenerateQRButton" 
+    (click)="generateQRCode()" 
+    expand="block" 
+    class="submit ion-margin-top"
+    [disabled]="totalNonExchangeSales <= 0">
+    Generar QR
+  </ion-button>
+  </div>
+
+  <!-- Visualización del código QR -->
+  <div class="qr__container" *ngIf="qrCodeData">
+    <qrcode [qrdata]="qrCodeData" [width]="256"></qrcode>
   </div>
 </ion-content>
